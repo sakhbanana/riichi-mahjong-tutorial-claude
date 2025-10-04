@@ -291,11 +291,11 @@
 
     <div class="container">
         <div class="nav-tabs">
-            <button class="tab-btn active" onclick="showTab('basics')">Основы</button>
-            <button class="tab-btn" onclick="showTab('tiles')">Фишки</button>
-            <button class="tab-btn" onclick="showTab('yaku')">Яку</button>
-            <button class="tab-btn" onclick="showTab('scoring')">Очки</button>
-            <button class="tab-btn" onclick="showTab('practice')">Практика</button>
+            <button class="tab-btn active" onclick="showTab('basics', this)">Основы</button>
+            <button class="tab-btn" onclick="showTab('tiles', this)">Фишки</button>
+            <button class="tab-btn" onclick="showTab('yaku', this)">Яку</button>
+            <button class="tab-btn" onclick="showTab('scoring', this)">Очки</button>
+            <button class="tab-btn" onclick="showTab('practice', this)">Практика</button>
         </div>
 
         <div id="basics" class="content-section active">
@@ -622,6 +622,30 @@
 
             <h3>Конструктор рук</h3>
             <div class="hand-builder">
-                <p>Попробуйте собрать свою руку! (в разработке)</p>
+                <p>Нажимайте на фишки, чтобы добавить их в руку. Попробуйте собрать выигрышную комбинацию!</p>
+                
+                <div style="margin: 1rem 0;">
+                    <strong>Доступные фишки:</strong>
+                </div>
+                <div class="tile-display">
+                    <div class="tile man" onclick="addTile('1萬', 'man')">1萬</div>
+                    <div class="tile man" onclick="addTile('2萬', 'man')">2萬</div>
+                    <div class="tile man" onclick="addTile('3萬', 'man')">3萬</div>
+                    <div class="tile man" onclick="addTile('4萬', 'man')">4萬</div>
+                    <div class="tile man" onclick="addTile('5萬', 'man')">5萬</div>
+                    <div class="tile pin" onclick="addTile('①', 'pin')">①</div>
+                    <div class="tile pin" onclick="addTile('②', 'pin')">②</div>
+                    <div class="tile pin" onclick="addTile('③', 'pin')">③</div>
+                    <div class="tile sou" onclick="addTile('1s', 'sou')">1s</div>
+                    <div class="tile sou" onclick="addTile('2s', 'sou')">2s</div>
+                    <div class="tile sou" onclick="addTile('3s', 'sou')">3s</div>
+                    <div class="tile honor" onclick="addTile('東', 'honor')">東</div>
+                    <div class="tile honor" onclick="addTile('白', 'honor')">白</div>
+                    <div class="tile honor" onclick="addTile('中', 'honor')">中</div>
+                </div>
+                
+                <div style="margin: 1rem 0;">
+                    <strong>Ваша рука (<span id="tileCount">0</span>/14):</strong>
+                </div>
                 <div class="hand-area" id="handArea">
-                    <p style="color: #999;">Перетаск
+                    <p style="color: #999;" id="emptyMessage">Нажимайте на фишки выше, чтобы добавить их сюда
