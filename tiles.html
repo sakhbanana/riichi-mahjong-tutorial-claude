@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фишки - Риичи Маджонг</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #1e3c72;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0.5rem;
+        }
+
+        .nav-link {
+            color: #1e3c72;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-radius: 8px;
+            margin: 0.25rem;
+        }
+
+        .nav-link:hover {
+            background: #f0f4ff;
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #2a5298;
+            margin: 1.5rem 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin: 1rem 0;
+        }
+
+        .tile-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .tile-display {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            justify-content: center;
+        }
+
+        .tile {
+            width: 50px;
+            height: 70px;
+            background: white;
+            border: 2px solid #333;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .tile:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .tile.man { 
+            color: #e74c3c;
+            border-color: #e74c3c;
+        }
+        .tile.pin { 
+            color: #3498db;
+            border-color: #3498db;
+        }
+        .tile.sou { 
+            color: #27ae60;
+            border-color: #27ae60;
+        }
+        .tile.honor { 
+            color: #9b59b6;
+            border-color: #9b59b6;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .term-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .term-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .suit-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .suit-icon {
+            font-size: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #1e3c72;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .nav-container {
+                flex-direction: column;
+            }
+
+            .tile {
+                width: 40px;
+                height: 60px;
+                font-size: 1.2rem;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🀄 Риичи Маджонг</h1>
+        <p>Интерактивный учебник по японскому маджонгу</p>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-link">Главная</a>
+            <a href="basics.html" class="nav-link">Основы</a>
+            <a href="tiles.html" class="nav-link active">Фишки</a>
+            <a href="yaku.html" class="nav-link">Яку</a>
+            <a href="scoring.html" class="nav-link">Очки</a>
+            <a href="practice.html" class="nav-link">Практика</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="content">
+            <h2>Фишки Маджонга</h2>
+            
+            <div class="info-box">
+                <strong>📊 Всего в игре:</strong> 136 фишек (каждая фишка присутствует в 4 экземплярах)
+                <br><strong>Состав:</strong> 108 числовых фишек + 28 почётных фишек
+            </div>
+
+            <h3>Числовые масти (108 фишек)</h3>
+            <p>Каждая масть содержит фишки от 1 до 9, по 4 экземпляра каждой.</p>
+
+            <div class="tile-section">
+                <div class="suit-header">
+                    <span class="suit-icon">🀇</span>
+                    <div>
+                        <h3 style="margin: 0;">Манзу (萬子) — Символы / Иероглифы</h3>
+                        <p style="margin: 0; color: #666;">Обозначается буквой "m" или иероглифом 萬</p>
+                    </div>
+                </div>
+                <div class="tile-display">
+                    <div class="tile man">1萬</div>
+                    <div class="tile man">2萬</div>
+                    <div class="tile man">3萬</div>
+                    <div class="tile man">4萬</div>
+                    <div class="tile man">5萬</div>
+                    <div class="tile man">6萬</div>
+                    <div class="tile man">7萬</div>
+                    <div class="tile man">8萬</div>
+                    <div class="tile man">9萬</div>
+                </div>
+                <p><strong>Как читать:</strong> 1m, 2m, 3m, 4m, 5m, 6m, 7m, 8m, 9m</p>
+            </div>
+
+            <div class="tile-section">
+                <div class="suit-header">
+                    <span class="suit-icon">🀙</span>
+                    <div>
+                        <h3 style="margin: 0;">Пинзу (筒子) — Круги / Точки</h3>
+                        <p style="margin: 0; color: #666;">Обозначается буквой "p"</p>
+                    </div>
+                </div>
+                <div class="tile-display">
+                    <div class="tile pin">①</div>
+                    <div class="tile pin">②</div>
+                    <div class="tile pin">③</div>
+                    <div class="tile pin">④</div>
+                    <div class="tile pin">⑤</div>
+                    <div class="tile pin">⑥</div>
+                    <div class="tile pin">⑦</div>
+                    <div class="tile pin">⑧</div>
+                    <div class="tile pin">⑨</div>
+                </div>
+                <p><strong>Как читать:</strong> 1p, 2p, 3p, 4p, 5p, 6p, 7p, 8p, 9p</p>
+            </div>
+
+            <div class="tile-section">
+                <div class="suit-header">
+                    <span class="suit-icon">🀐</span>
+                    <div>
+                        <h3 style="margin: 0;">Соузу (索子) — Бамбуки / Палочки</h3>
+                        <p style="margin: 0; color: #666;">Обозначается буквой "s"</p>
+                    </div>
+                </div>
+                <div class="tile-display">
+                    <div class="tile sou">🎋</div>
+                    <div class="tile sou">2s</div>
+                    <div class="tile sou">3s</div>
+                    <div class="tile sou">4s</div>
+                    <div class="tile sou">5s</div>
+                    <div class="tile sou">6s</div>
+                    <div class="tile sou">7s</div>
+                    <div class="tile sou">8s</div>
+                    <div class="tile sou">9s</div>
+                </div>
+                <p><strong>Как читать:</strong> 1s, 2s, 3s, 4s, 5s, 6s, 7s, 8s, 9s</p>
+                <div class="warning-box">
+                    <strong>⚠️ Внимание:</strong> Единица бамбука (1s) обычно изображается как птица или особый узор, а не как одна палочка!
+                </div>
+            </div>
+
+            <h3>Почётные фишки (28 фишек)</h3>
+            <p>Почётные фишки не имеют числового значения и не могут формировать последовательности. Из них можно делать только сеты и пары.</p>
+
+            <div class="tile-section">
+                <div class="suit-header">
+                    <span class="suit-icon">🀀</span>
+                    <div>
+                        <h3 style="margin: 0;">Ветра (風牌 Kazehai)</h3>
+                        <p style="margin: 0; color: #666;">4 вида, по 4 экземпляра = 16 фишек</p>
+                    </div>
+                </div>
+                <div class="tile-display">
+                    <div class="tile honor">東</div>
+                    <div class="tile honor">南</div>
+                    <div class="tile honor">西</div>
+                    <div class="tile honor">北</div>
+                </div>
+                <table>
+                    <tr>
+                        <th>Фишка</th>
+                        <th>Название</th>
+                        <th>Чтение</th>
+                        <th>Значение</th>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 1.5rem; color: #9b59b6;">東</td>
+                        <td>Тон</td>
+                        <td>Ton</td>
+                        <td>Восток</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 1.5rem; color: #9b59b6;">南</td>
+                        <td>Нан</td>
+                        <td>Nan</td>
+                        <td>Юг</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 1.5rem; color: #9b59b6;">西</td>
+                        <td>Ша</td>
+                        <td>Shaa</td>
+                        <td>Запад</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 1.5rem; color: #9b59b6;">北</td>
+                        <td>Пей</td>
+                        <td>Pei</td>
+                        <td>Север</td>
+                    </tr>
+                </table>
+                <div class="info-box">
+                    <strong>💡 Важно:</strong> Ветра имеют значение в игре! Ваш личный ветер и преобладающий ветер раунда влияют на очки и яку.
+                </div>
+            </div>
+
+            <div class="tile-section">
+                <div class="suit-header">
+                    <span class="suit-icon">🀆</span>
+                    <div>
+                        <h3 style="margin: 0;">Драконы (三元牌 Sangenpai)</h3>
+                        <p style="margin: 0; color: #666;">3 вида, по 4 экземпляра = 12 фишек</p>
+                    </div>
+                </div>
+                <div class="tile-display">
+                    <div class="tile honor">白</div>
+                    <div class="tile honor">發</div>
+                    <div class="tile honor">中</div>
+                </div>
+                <table>
+                    <tr>
+                        <th>Фишка</th>
+                        <th>Название</th>
+                        <th>Чтение</th>
+                        <th>Значение</th>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 1.5rem; color: #9b59b6;">白</td>
+                        <td>Хаку</td>
+                        <td>Haku</td>
+                        <td>Белый дракон</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 1.5rem; color: #9b59b6;">發</td>
+                        <td>Хацу</td>
+                        <td>Hatsu</td>
+                        <td>Зелёный дракон</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 1.5rem; color: #9b59b6;">中</td>
+                        <td>Тюн</td>
+                        <td>Chun</td>
+                        <td>Красный дракон</td>
+                    </tr>
+                </table>
+                <div class="info-box">
+                    <strong>💡 Совет:</strong> Сет из драконов всегда даёт вам яку "Якухай", что делает драконов очень ценными фишками!
+                </div>
+            </div>
+
+            <h3>Важная терминология</h3>
+
+            <div class="term-card">
+                <h4>Терминалы (終牌 Shuupai)</h4>
+                <p>Фишки 1 и 9 каждой масти: 1m, 9m, 1p, 9p, 1s, 9s</p>
+                <p><strong>Всего:</strong> 6 типов × 4 экземпляра = 24 фишки</p>
+            </div>
+
+            <div class="term-card">
+                <h4>Простые фишки (中張牌 Chuuchanpai)</h4>
+                <p>Фишки 2-8 каждой масти</p>
+                <p><strong>Например:</strong> 2m, 3m, 4m, 5m, 6m, 7m, 8m и т.д.</p>
+            </div>
+
+            <div class="term-card">
+                <h4>Яочу (么九牌 Yaochuuhai)</h4>
+                <p>Терминалы (1 и 9) + все почётные фишки (ветра и драконы)</p>
+                <p><strong>Всего:</strong> 13 типов × 4 экземпляра = 52 фишки</p>
+            </div>
+
+            <div class="term-card">
+                <h4>Тяньчао (中張牌)</h4>
+                <p>Простые фишки (2-8). Противоположность яочу.</p>
+                <p><strong>Используется в яку "Танъяо"</strong></p>
+            </div>
+
+            <h3>Дополнительные фишки</h3>
+
+            <div class="info-box">
+                <strong>🔴 Ака-дора (赤ドラ) — Красные пятёрки</strong>
+                <p style="margin-top: 0.5rem;">В некоторых вариантах правил одна из четырёх пятёрок каждой масти (5m, 5p, 5s) заменяется на красную. Красная пятёрка автоматически даёт +1 хан.</p>
+                <p><strong>⚠️ Важно:</strong> Ака-дора не является яку, но увеличивает стоимость руки!</p>
+            </div>
+
+            <div class="warning-box">
+                <strong>💡 Совет для новичков:</strong>
+                <p style="margin-top: 0.5rem;">Сначала сосредоточьтесь на запоминании базовых фишек. Не пытайтесь выучить всё сразу!</p>
+                <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>Запомните три числовые масти и их обозначения (m, p, s)</li>
+                    <li>Выучите драконов — они встречаются чаще всего</li>
+                    <li>Затем изучите ветра</li>
+                    <li>Запомните термины "терминалы" и "простые фишки"</li>
+                </ol>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="basics.html" class="btn">← Основы</a>
+                <a href="yaku.html" class="btn">Яку →</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>🀄 Риичи Маджонг - Интерактивный учебник</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Создано для изучения японского маджонга</p>
+    </footer>
+</body>
+</html>
