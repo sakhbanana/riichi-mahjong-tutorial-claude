@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Яку - Риичи Маджонг</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #1e3c72;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0.5rem;
+        }
+
+        .nav-link {
+            color: #1e3c72;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-radius: 8px;
+            margin: 0.25rem;
+        }
+
+        .nav-link:hover {
+            background: #f0f4ff;
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #2a5298;
+            margin: 1.5rem 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin: 1rem 0;
+        }
+
+        .yaku-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            transition: all 0.3s;
+        }
+
+        .yaku-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .yaku-card h4 {
+            color: #1e3c72;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .yaku-han {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .yaku-han.yakuman {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .yaku-condition {
+            background: #f8f9fa;
+            padding: 0.75rem;
+            border-radius: 5px;
+            margin: 0.5rem 0;
+        }
+
+        .yaku-example {
+            background: #e7f3ff;
+            padding: 0.75rem;
+            border-radius: 5px;
+            margin: 0.5rem 0;
+            border-left: 3px solid #2196F3;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .yaku-category {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .difficulty-easy {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .difficulty-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .difficulty-hard {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .quick-reference {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .quick-reference h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .quick-reference ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .quick-reference li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .quick-reference li:last-child {
+            border-bottom: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .nav-container {
+                flex-direction: column;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .yaku-card h4 {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🀄 Риичи Маджонг</h1>
+        <p>Интерактивный учебник по японскому маджонгу</p>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-link">Главная</a>
+            <a href="basics.html" class="nav-link">Основы</a>
+            <a href="tiles.html" class="nav-link">Фишки</a>
+            <a href="yaku.html" class="nav-link active">Яку</a>
+            <a href="scoring.html" class="nav-link">Очки</a>
+            <a href="practice.html" class="nav-link">Практика</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="content">
+            <h2>Яку — выигрышные комбинации</h2>
+            
+            <div class="warning-box">
+                <strong>⚠️ КРИТИЧЕСКИ ВАЖНО:</strong> Яку — это специальные комбинации, которые придают руке ценность. 
+                Без хотя бы одного яку вы НЕ можете объявить выигрыш, даже если у вас правильная структура руки (4 группы + пара)!
+            </div>
+
+            <div class="info-box">
+                <strong>📌 Что нужно знать:</strong>
+                <p style="margin-top: 0.5rem;">• Каждое яку даёт определённое количество ханов (очковых множителей)</p>
+                <p>• Яку можно комбинировать — ханы складываются</p>
+                <p>• Некоторые яку доступны только для закрытой руки</p>
+                <p>• Открытые яку часто стоят меньше ханов</p>
+            </div>
+
+            <div class="quick-reference">
+                <h4>🎯 Быстрая навигация</h4>
+                <ul>
+                    <li><a href="#beginner" style="text-decoration: none; color: #667eea;">→ Яку для новичков (1 хан)</a></li>
+                    <li><a href="#intermediate" style="text-decoration: none; color: #667eea;">→ Средние яку (2-3 хана)</a></li>
+                    <li><a href="#advanced" style="text-decoration: none; color: #667eea;">→ Сложные яку (4-6 ханов)</a></li>
+                    <li><a href="#yakuman" style="text-decoration: none; color: #667eea;">→ Якуман (13+ ханов)</a></li>
+                </ul>
+            </div>
+
+            <div class="yaku-category" id="beginner">
+                <h3>🌟 Яку для новичков (1 хан)</h3>
+                <p>Самые простые и часто встречающиеся яку. Начните изучение с них!</p>
+
+                <div class="yaku-card">
+                    <h4>
+                        Риичи (立直 Riichi)
+                        <span class="yaku-han">1 хан</span>
+                        <span class="difficulty-badge difficulty-easy">Легко</span>
+                    </h4>
+                    <div class="yaku-condition">
+                        <strong>Условия:</strong>
+                        <p>• Закрытая рука (не использовали Чи/Пон/Кан)</p>
+                        <p>• Рука в состоянии тенпай (ждёте 1 фишку до выигрыша)</p>
+                        <p>• Объявите "Риичи!" и положите 1000 очков на стол</p>
+                        <p>• После объявления нельзя менять руку</p>
+                    </div>
+                    <div class="yaku-example">
+                        <strong>Пример:</strong> У вас рука 123m 456p 789s 22s и вы ждёте 2s или 5s. Объявите "Риичи!" и положите палочку на 1000 очков.
+                    </div>
+                    <div class="info-box">
+                        <strong>💡 Бонус:</strong> Если вы выигрываете с Риичи, открываются скрытые дора (ура-дора), которые могут значительно увеличить стоимость руки!
+                    </div>
+                </div>
+
+                <div class="yaku-card">
+                    <h4>
+                        Якухай (役牌 Yakuhai) — Ценные фишки
+                        <span class="yaku-han">1 хан</span>
+                        <span class="difficulty-badge difficulty-easy">Легко</span>
+                    </h4>
+                    <div class="yaku-condition">
+                        <strong>Условия:</strong> Сет из любой из следующих фишек:
+                        <p>• Любой из трёх драконов (白, 發, 中)</p>
+                        <p>• Ваш личный ветер (зависит от вашего места за столом)</p>
+                        <p>• Преобладающий ветер раунда</p>
+                    </div>
+                    <div class="yaku-example">
+                        <strong>Примеры:</strong>
+                        <p>• 白白白 (три белых дракона) = +1 хан</p>
+                        <p>• 東東東 (три восточных ветра, если вы дилер) = +1 хан</p>
+                        <p>• Если у вас дракон И ваш ветер — это два разных яку = +2 хана!</p>
+                    </div>
+                    <div class="success-box">
+                        <strong>✅ Совет:</strong> Якухай — самое простое и надёжное яку. Всегда старайтесь собирать сеты из драконов!
+                    </div>
+                </div>
+
+                <div class="yaku-card">
+                    <h4>
+                        Танъяо (断么九 Tanyao) — Все простые
+                        <span class="yaku-han">1 хан</span>
+                        <span class="difficulty-badge difficulty-easy">Легко</span>
+                    </h4>
+                    <div class="yaku-condition">
+                        <strong>Условия:</strong>
+                        <p>• Вся рука состоит только из простых фишек (2-8)</p>
+                        <p>• Нет терминалов (1 и 9)</p>
+                        <p>• Нет почётных фишек (ветров и драконов)</p>
+                    </div>
+                    <div class="yaku-example">
+                        <strong>Пример:</strong> 234m 567p 345s 66s 77s — все фишки в диапазоне 2-8.
+                    </div>
+                    <div class="success-box">
+                        <strong>✅ Совет:</strong> Танъяо очень часто встречается и легко комбинируется с другими яку!
+                    </div>
+                </div>
+
+                <div class="yaku-card">
+                    <h4>
+                        Пинфу (平和 Pinfu) — Мирная рука
+                        <span class="yaku-han">1 хан</span>
+                        <span class="difficulty-badge difficulty-medium">Средне</span>
+                    </h4>
+                    <div class="yaku-condition">
+                        <strong>Условия:</strong>
+                        <p>• Закрытая рука из 4 последовательностей (без сетов!)</p>
+                        <p>• Пара не из ценных фишек (не драконы, не ваш ветер, не преобладающий ветер)</p>
+                        <p>• Ожидание на две стороны (ryanmen)</p>
+                    </div>
+                    <div class="yaku-example">
+                        <strong>Пример:</strong> 123m 456m 789p 234s 55s — ждём 3s или 6s (ожидание на две стороны).
+                    </div>
+                    <div class="warning-box">
+                        <strong>⚠️ Внимание:</strong> Это самое сложное из базовых яку для новичков. Не переживайте, если не получается сразу!
+                    </div>
+                </div>
+
+                <div class="yaku-card">
+                    <h4>
+                        Ипейко (一盃口 Iipeikou) — Одинаковые последовательности
+                        <span class="yaku-han">1 хан</span>
+                        <span class="difficulty-badge difficulty-easy">Легко</span>
+                    </h4>
+                    <div class="yaku-condition">
+                        <strong>Условия:</strong>
+                        <p>• Закрытая рука</p>
+                        <p>• Две идентичные последовательности</p>
+                    </div>
+                    <div class="yaku-example">
+                        <strong>Пример:</strong> 223344m 567p 789s 11s — две последовательности 2-3-4 манзу.
+                    </div>
+                </div>
+            </div>
+
+            <div class="yaku-category" id="intermediate">
+                <h3>🎖️ Средние яку (2-3 хана)</h3>
+                <p>Более редкие комбинации, но часто очень выгодные.</p>
+
+                <div class="yaku-card">
+                    <h4>
+                        Тойтой (対々和 Toitoi) — Все сеты
+                        <span class="yaku-han">2 хана</span>
+                        <span class="difficulty-badge difficulty-easy">Легко</span>
+                    </h4>
+                    <div class="yaku-condition">
+                        <strong>Условия:</strong>
+                        <p>• Рука состоит из 4 сетов + пара</p>
+                        <p>• Нет ни одной последовательности</p>
+                    </div>
+                    <div class="yaku-example">
+                        <strong>Пример:</strong> 111m 999m 222p 東東東 55s — четыре сета и пара.
+                    </div>
+                </div>
+
+                <div class="yaku-card">
+                    <h4>
+                        Чиитойцу (七対子 Chiitoitsu) — Семь пар
+                        <span class="yaku-han">2 хана</span>
+                        <span class="difficulty-badge difficulty-medium">Средне</span>
+                    </h4>
+                    <div class="yaku-condition">
+                        <strong>Условия:</strong>
+                        <p>• Закрытая рука</p>
+                        <p>• Рука состоит из 7 различных пар</p>
+                        <p>• Нельзя использовать одну и ту же фишку в двух парах (например, все четыре 5m нельзя разделить на две пары)</p>
+                    </div>
+                    <div class="yaku-example">
+                        <strong>Пример:</strong> 11m 33m 55p 77p 99s 東東 白白 — семь разных пар.
+                    </div>
+                    <div class="success-box">
+                        <strong>✅ Совет:</strong> Это уникальная структура руки! Не нужны группы — только пары.
+                    </div>
+                </div>
+
+                <div class="yaku-card">
+                    <h4>
+                        Санситоку-дожун (三色同順 Sanshoku Doujun) — Три цвета
+                        <span class="yaku-han">2 хана</span>
+                        <span class="difficulty-badge difficulty-hard">Сложно</span>
+                    </h4>
+                    <div class="yaku-condition">
+                        <strong>Условия:</strong>
+                        <p>• Три идентичные последовательности в разных мастях</p>
+                        <p>• Закрытая рука: 2 хана, открытая: 1 хан</p>
+                    </div>
+                    <div class="yaku-example">
+                        <strong>Пример:</strong> 234m 234p 234s — последовательность 2-3-4 в каждой масти.
+                    </div>
+                </div>
+
+                <div class="yaku-card">
+                    <h4>
+                        Хонитсу (混一色 Honitsu) — Полукрась
+                        <span class="yaku-han">3/2 хана</span>
+                        <span class="difficulty-badge difficulty-medium">Средне</span>
+                    </h4>
+                    <div class="yaku-condition">
+                        <strong>Условия:</strong>
+                        <p>• Одна масть + почётные фишки (ветра и/или драконы)</p>
+                        <p>• Закрытая рука: 3 хана, открытая: 2 хана</p>
+                    </div>
+                    <div class="yaku-example">
+                        <strong>Пример:</strong> 123456789m 東東東 白白 — только манзу + почётные.
+                    </div>
+                    <div class="success-box">
+                        <strong>✅ Совет:</strong> Часто комбинируется с Якухай для дополнительных ханов!
+                    </div>
+                </div>
+            </div>
+
+            <div class="yaku-category" id="advanced">
+                <h3>🏆 Сложные яку (4-6 ханов)</h3>
+                <p>Редкие, но очень ценные комбинации.</p>
+
+                <div class="yaku-card">
+                    <h4>
+                        Чинитсу (清一色 Chinitsu) — Чистая масть
+                        <span class="yaku-han">6/5 ханов</span>
+                        <span class="difficulty-badge difficulty-medium">Средне</span>
+                    </h4>
+                    <div class="yaku-condition">
+                        <strong>Условия:</strong>
+                        <p>• Вся рука одной масти (без почётных фишек)</p>
+                        <p>• Закрытая рука: 6 ханов, открытая: 5 ханов</p>
+                    </div>
+                    <div class="yaku-example">
+                        <strong>Пример:</strong> 123456777888m 99m — только фишки манзу.
+                    </div>
+                    <div class="info-box">
+                        <strong>💡 Важно:</strong> Это одно из самых ценных часто встречающихся яку! Часто достаточно для манган (8000 очков).
+                    </div>
+                </div>
+
+                <div class="yaku-card">
+                    <h4>
+                        Рянпейко (二盃口 Ryanpeikou) — Две пары последовательностей
+                        <span class="yaku-han">3 хана</span>
+                        <span class="difficulty-badge difficulty-hard">Сложно</span>
+                    </h4>
+                    <div class="yaku-condition">
+                        <strong>Условия:</strong>
+                        <p>• Закрытая рука</p>
+                        <p>• Две пары идентичных последовательностей</p>
+                    </div>
+                    <div class="yaku-example">
+                        <strong>Пример:</strong> 112233m 445566p 77s — две пары (1-2-3 и 1-2-3 манзу, 4-5-6 и 4-5-6 пинзу).
+                    </div>
+                </div>
+            </div>
+
+            <div class="yaku-category" id="yakuman">
+                <h3>👑 Якуман (役満 Yakuman) — 13+ ханов</h3>
+                <p>Самые редкие и ценные комбинации в маджонге. Стоят максимальное количество очков!</p>
+
+                <div class="yaku-card">
+                    <h4>
+                        Кокуши мусо (国士無双 Kokushi Musou) — 13 сирот
+                        <span class="yaku-han yakuman">Якуман</span>
+                        <span class="difficulty-badge difficulty-hard">Очень сложно</span>
+                    </h4>
+                    <div class="yaku-condition">
+                        <strong>Условия:</strong>
+                        <p>• Закрытая рука</p>
+                        <p>• Все терминалы (1m, 9m, 1p, 9p, 1s, 9s) + все почётные фишки + одна пара из них</p>
+                    </div>
+                    <div class="yaku-example">
+                        <strong>Пример:</strong> 1m 9m 1p 9p 1s 9s 東南西北白發中中 — 13 разных яочу + пара.
+                    </div>
+                </div>
+
+                <div class="yaku-card">
+                    <h4>
+                        Суанко (四暗刻 Suuankou) — Четыре закрытых сета
+                        <span class="yaku-han yakuman">Якуман</span>
+                        <span class="difficulty-badge difficulty-hard">Очень сложно</span>
+                    </h4>
+                    <div class="yaku-condition">
+                        <strong>Условия:</strong>
+                        <p>• Закрытая рука</p>
+                        <p>• Четыре сета, все собраны без использования чужих сбросов</p>
+                    </div>
+                    <div class="yaku-example">
+                        <strong>Пример:</strong> 111m 555p 777s 東東東 99m — четыре сета + пара, все закрыты.
+                    </div>
+                </div>
+
+                <div class="yaku-card">
+                    <h4>
+                        Дайсанген (大三元 Daisangen) — Большие три дракона
+                        <span class="yaku-han yakuman">Якуман</span>
+                        <span class="difficulty-badge difficulty-hard">Очень сложно</span>
+                    </h4>
+                    <div class="yaku-condition">
+                        <strong>Условия:</strong>
+                        <p>• Три сета из трёх разных драконов</p>
+                    </div>
+                    <div class="yaku-example">
+                        <strong>Пример:</strong> 白白白 發發發 中中中 123m 55p — все три дракона.
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>💰 Стоимость Якуман:</strong> 32,000 очков от проигравшего (для не-дилера) или 48,000 (для дилера). Это максимальная стоимость руки в стандартном маджонге!
+                </div>
+            </div>
+
+            <div class="success-box">
+                <h4>📚 Стратегия изучения яку:</h4>
+                <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li><strong>Начинайте с трёх:</strong> Риичи, Танъяо, Якухай — выучите их наизусть</li>
+                    <li><strong>Играйте онлайн:</strong> Практика — лучший способ запомнить яку</li>
+                    <li><strong>Не гонитесь за сложными:</strong> Большинство выигрышей — это простые яку на 1-3 хана</li>
+                    <li><strong>Используйте шпаргалки:</strong> Держите список яку под рукой первое время</li>
+                    <li><strong>Постепенность:</strong> Каждую неделю добавляйте 1-2 новых яку в свой арсенал</li>
+                </ol>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="tiles.html" class="btn">← Фишки</a>
+                <a href="scoring.html" class="btn">Очки →</a>
+            </div>
