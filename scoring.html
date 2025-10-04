@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Очки - Риичи Маджонг</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #1e3c72;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0.5rem;
+        }
+
+        .nav-link {
+            color: #1e3c72;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-radius: 8px;
+            margin: 0.25rem;
+        }
+
+        .nav-link:hover {
+            background: #f0f4ff;
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #2a5298;
+            margin: 1.5rem 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin: 1rem 0;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight-row {
+            background: #fff9c4 !important;
+            font-weight: 600;
+        }
+
+        .term-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .term-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-box {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-title {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .calculation {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .calculation-step {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .score-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .comparison-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .comparison-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .comparison-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .nav-container {
+                flex-direction: column;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+            }
+
+            .comparison-table {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🀄 Риичи Маджонг</h1>
+        <p>Интерактивный учебник по японскому маджонгу</p>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-link">Главная</a>
+            <a href="basics.html" class="nav-link">Основы</a>
+            <a href="tiles.html" class="nav-link">Фишки</a>
+            <a href="yaku.html" class="nav-link">Яку</a>
+            <a href="scoring.html" class="nav-link active">Очки</a>
+            <a href="practice.html" class="nav-link">Практика</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="content">
+            <h2>Система подсчёта очков</h2>
+            
+            <div class="info-box">
+                <strong>🎯 Основная идея:</strong> Стоимость вашей руки зависит от двух факторов:
+                <p style="margin-top: 0.5rem;"><strong>Ханы (飜)</strong> — множители от яку и бонусов</p>
+                <p><strong>Фу (符)</strong> — базовые очки от структуры руки</p>
+            </div>
+
+            <h3>Основные понятия</h3>
+
+            <div class="term-card">
+                <h4>Хан (飜 Han)</h4>
+                <p>Множитель стоимости руки. Чем больше ханов, тем дороже рука.</p>
+                <p><strong>Источники ханов:</strong></p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>Яку (1-13+ ханов)</li>
+                    <li>Дора (каждая дора = +1 хан)</li>
+                    <li>Ура-дора (скрытые дора при Риичи)</li>
+                    <li>Ака-дора (красные пятёрки)</li>
+                </ul>
+            </div>
+
+            <div class="term-card">
+                <h4>Фу (符 Fu)</h4>
+                <p>Базовые очки руки. Зависят от состава групп и способа выигрыша.</p>
+                <p><strong>Минимум:</strong> 30 фу (для большинства рук)</p>
+                <p><strong>Примеры начисления фу:</strong></p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>Базовые 20 фу за любую руку</li>
+                    <li>+10 фу за выигрыш на сбросе (Рон) для закрытой руки</li>
+                    <li>+2 фу за выигрыш на Цумо для закрытой руки</li>
+                    <li>+2-8 фу за сеты (зависит от типа фишек и открыта/закрыта группа)</li>
+                    <li>+2 фу за пару из драконов или ветров</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Для новичков:</strong> Подсчёт фу — самая сложная часть маджонга. На первых порах используйте калькуляторы или автоматический подсчёт в онлайн-играх. Сосредоточьтесь на ханах!
+            </div>
+
+            <h3>Стартовые очки</h3>
+            <div class="info-box">
+                Каждый игрок начинает игру с <span class="score-badge">25,000 очков</span>
+            </div>
+
+            <h3>Таблица стоимости рук (для не-дилера)</h3>
+            <p>Это самая важная таблица для начинающих!</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ханы</th>
+                        <th>Название</th>
+                        <th>Рон<br>(один платит)</th>
+                        <th>Цумо<br>(дилер/другие)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1 хан</td>
+                        <td>—</td>
+                        <td>1,000 - 1,500</td>
+                        <td>300/500</td>
+                    </tr>
+                    <tr>
+                        <td>2 хана</td>
+                        <td>—</td>
+                        <td>2,000 - 2,900</td>
+                        <td>500/1,000</td>
+                    </tr>
+                    <tr>
+                        <td>3 хана</td>
+                        <td>—</td>
+                        <td>3,900 - 5,800</td>
+                        <td>1,000/2,000</td>
+                    </tr>
+                    <tr>
+                        <td>4 хана</td>
+                        <td>—</td>
+                        <td>7,700</td>
+                        <td>2,000/4,000</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>5 ханов</td>
+                        <td><strong>Манган</strong></td>
+                        <td><strong>8,000</strong></td>
+                        <td><strong>2,000/4,000</strong></td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>6-7 ханов</td>
+                        <td><strong>Ханеман</strong></td>
+                        <td><strong>12,000</strong></td>
+                        <td><strong>3,000/6,000</strong></td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>8-10 ханов</td>
+                        <td><strong>Байман</strong></td>
+                        <td><strong>16,000</strong></td>
+                        <td><strong>4,000/8,000</strong></td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>11-12 ханов</td>
+                        <td><strong>Санбайман</strong></td>
+                        <td><strong>24,000</strong></td>
+                        <td><strong>6,000/12,000</strong></td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>13+ ханов</td>
+                        <td><strong>Якуман</strong></td>
+                        <td><strong>32,000</strong></td>
+                        <td><strong>8,000/16,000</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <strong>📊 Как читать таблицу Цумо:</strong>
+                <p style="margin-top: 0.5rem;">Например, "2,000/4,000" означает:</p>
+                <ul style="margin-left: 1.5rem;">
+                    <li>Дилер (東) платит 4,000 очков</li>
+                    <li>Каждый из двух других игроков платит по 2,000 очков</li>
+                    <li>Итого победитель получает: 4,000 + 2,000 + 2,000 = 8,000 очков</li>
+                </ul>
+            </div>
+
+            <h3>Для дилера (東 Восток)</h3>
+            <div class="warning-box">
+                <strong>🎴 Особенность:</strong> Дилер получает и платит в <strong>1.5 раза больше</strong> очков!
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ханы</th>
+                        <th>Название</th>
+                        <th>Рон</th>
+                        <th>Цумо (от каждого)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1 хан</td>
+                        <td>—</td>
+                        <td>1,500 - 2,000</td>
+                        <td>500</td>
+                    </tr>
+                    <tr>
+                        <td>2 хана</td>
+                        <td>—</td>
+                        <td>2,900 - 4,500</td>
+                        <td>1,000</td>
+                    </tr>
+                    <tr>
+                        <td>3 хана</td>
+                        <td>—</td>
+                        <td>5,800 - 7,700</td>
+                        <td>2,000</td>
+                    </tr>
+                    <tr>
+                        <td>4 хана</td>
+                        <td>—</td>
+                        <td>11,600</td>
+                        <td>4,000</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>5 ханов</td>
+                        <td><strong>Манган</strong></td>
+                        <td><strong>12,000</strong></td>
+                        <td><strong>4,000</strong></td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>6-7 ханов</td>
+                        <td><strong>Ханеман</strong></td>
+                        <td><strong>18,000</strong></td>
+                        <td><strong>6,000</strong></td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>8-10 ханов</td>
+                        <td><strong>Байман</strong></td>
+                        <td><strong>24,000</strong></td>
+                        <td><strong>8,000</strong></td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>11-12 ханов</td>
+                        <td><strong>Санбайман</strong></td>
+                        <td><strong>36,000</strong></td>
+                        <td><strong>12,000</strong></td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>13+ ханов</td>
+                        <td><strong>Якуман</strong></td>
+                        <td><strong>48,000</strong></td>
+                        <td><strong>16,000</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Способы выигрыша</h3>
+
+            <div class="comparison-table">
+                <div class="comparison-card">
+                    <h4>🎯 Рон (ロン)</h4>
+                    <p><strong>Выигрыш на чужом сбросе</strong></p>
+                    <p style="margin-top: 0.5rem;">• Игрок сбрасывает фишку, которая вам нужна</p>
+                    <p>• Вы объявляете "Рон!"</p>
+                    <p>• Проигравший платит <strong>всю сумму</strong> один</p>
+                    <p>• Обычно выгоднее для победителя</p>
+                </div>
+
+                <div class="comparison-card">
+                    <h4>🎲 Цумо (ツモ)</h4>
+                    <p><strong>Выигрыш на фишке из стены</strong></p>
+                    <p style="margin-top: 0.5rem;">• Вы сами тянете нужную фишку</p>
+                    <p>• Объявляете "Цумо!"</p>
+                    <p>• <strong>Все игроки</strong> платят вам</p>
+                    <p>• Дилер платит больше остальных</p>
+                </div>
+            </div>
+
+            <h3>Примеры расчёта</h3>
+
+            <div class="example-box">
+                <div class="example-title">📝 Пример 1: Простая рука</div>
+                <p><strong>Ситуация:</strong> Вы не-дилер, собрали руку с Танъяо (1 хан) и объявили Риичи (+1 хан). У вас одна дора (+1 хан).</p>
+                
+                <div class="calculation">
+                    <div class="calculation-step">Танъяо: 1 хан</div>
+                    <div class="calculation-step">Риичи: +1 хан</div>
+                    <div class="calculation-step">Дора: +1 хан</div>
+                    <div class="calculation-step">─────────────────</div>
+                    <div class="calculation-step"><strong>Итого: 3 хана</strong></div>
+                </div>
+
+                <p><strong>Если выиграли на Рон:</strong> 3,900 - 5,800 очков (в зависимости от фу)</p>
+                <p><strong>Если выиграли на Цумо:</strong> получаете 1,000 от дилера + по 2,000 от остальных = всего около 5,000</p>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">📝 Пример 2: Дорогая рука</div>
+                <p><strong>Ситуация:</strong> Вы собрали Чинитсу (6 ханов, закрытая) и у вас 2 доры.</p>
+                
+                <div class="calculation">
+                    <div class="calculation-step">Чинитсу (закрытая): 6 ханов</div>
+                    <div class="calculation-step">Дора: +2 хана</div>
+                    <div class="calculation-step">─────────────────</div>
+                    <div class="calculation-step"><strong>Итого: 8 ханов = Байман!</strong></div>
+                </div>
+
+                <p><strong>Если выиграли на Рон:</strong> 16,000 очков</p>
+                <p><strong>Если выиграли на Цумо:</strong> 4,000 + 8,000 + 8,000 = 16,000 очков</p>
+            </div>
+
+            <h3>Дополнительные бонусы</h3>
+
+            <div class="term-card">
+                <h4>🎴 Дора (ドラ)</h4>
+                <p>Бонусная фишка, которая добавляет ханы к руке.</p>
+                <p style="margin-top: 0.5rem;"><strong>Как работает:</strong></p>
+                <ul style="margin-left: 1.5rem;">
+                    <li>На столе открывается индикатор дора</li>
+                    <li>Следующая фишка в последовательности = дора</li>
+                    <li>Каждая дора в вашей руке = +1 хан</li>
+                    <li>Пример: индикатор показывает 3m → дора это 4m</li>
+                </ul>
+                <div class="warning-box" style="margin-top: 0.5rem;">
+                    <strong>⚠️ Важно:</strong> Дора НЕ является яку! Нужно хотя бы одно яку для выигрыша.
+                </div>
+            </div>
+
+            <div class="term-card">
+                <h4>🎭 Ура-дора (裏ドラ)</h4>
+                <p>Скрытые дора, которые открываются только при объявлении Риичи.</p>
+                <p style="margin-top: 0.5rem;">• Находятся под индикаторами дора</p>
+                <p>• Открываются только если вы выиграли с Риичи</p>
+                <p>• Могут значительно увеличить стоимость руки</p>
+            </div>
+
+            <div class="term-card">
+                <h4>🔴 Ака-дора (赤ドラ) — Красные пятёрки</h4>
+                <p>В некоторых правилах одна пятёрка каждой масти (5m, 5p, 5s) — красная.</p>
+                <p style="margin-top: 0.5rem;">• Каждая красная пятёрка автоматически = +1 хан</p>
+                <p>• Не зависит от индикатора дора</p>
+                <p>• Очень ценная фишка!</p>
+            </div>
+
+            <h3>Важные лимиты очков</h3>
+
+            <div class="success-box">
+                <p><strong>🎯 Манган (満貫)</strong> — 5+ ханов или 4 хана с 40+ фу</p>
+                <p style="margin-left: 1.5rem;">Это первый важный "потолок". Многие стратегии нацелены на манган.</p>
+            </div>
+
+            <div class="success-box">
+                <p><strong>🏆 Ханеман (跳満)</strong> — 6-7 ханов</p>
+                <p style="margin-left: 1.5rem;">Очень хорошая рука. Обычно Чинитсу или комбинация нескольких яку.</p>
+            </div>
+
+            <div class="success-box">
+                <p><strong>💎 Байман (倍満)</strong> — 8-10 ханов</p>
+                <p style="margin-left: 1.5rem;">Редкая и дорогая рука. Чинитсу с дорами или комбинация сложных яку.</p>
+            </div>
+
+            <div class="success-box">
+                <p><strong>👑 Якуман (役満)</strong> — 13+ ханов или специальные редкие комбинации</p>
+                <p style="margin-left: 1.5rem;">Максимальная стоимость руки. Встречается очень редко!</p>
+            </div>
+
+            <h3>Советы по очкам</h3>
+
+            <div class="info-box">
+                <strong>💡 Для новичков:</strong>
+                <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li><strong>Не паникуйте!</strong> В онлайн-играх очки считаются автоматически</li>
+                    <li><strong>Запомните основные лимиты:</strong> Манган (8,000), Ханеман (12,000), Байман (16,000)</li>
+                    <li><strong>Сосредоточьтесь на ханах:</strong> Больше ханов = больше очков</li>
+                    <li><strong>Дора очень важна:</strong> 2-3 доры могут поднять руку с 1 хана до мангана</li>
+                    <li><strong>Риичи + дора</strong> — простейший путь к хорошим очкам</li>
+                </ol>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="yaku.html" class="btn">← Яку</a>
+                <a href="practice.html" class="btn">Практика →</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>🀄 Риичи Маджонг - Интерактивный учебник</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Создано для изучения японского маджонга</p>
+    </footer>
+</body>
+</html>
