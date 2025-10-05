@@ -143,19 +143,110 @@
             margin: 1.5rem 0;
         }
 
-        .highlight {
-            background: #fff9c4;
-            padding: 0.2rem 0.4rem;
-            border-radius: 3px;
+        /* Animation container */
+        .animation-container {
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .game-table {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            margin: 1rem auto;
+            background: #2a5;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .player-area {
+            position: absolute;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 0.5rem;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .player-area.active {
+            background: rgba(255,215,0,0.3);
+            border-color: gold;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .player-east { top: 10px; left: 50%; transform: translateX(-50%); }
+        .player-south { right: 10px; top: 50%; transform: translateY(-50%); }
+        .player-west { bottom: 10px; left: 50%; transform: translateX(-50%); }
+        .player-north { left: 10px; top: 50%; transform: translateY(-50%); }
+
+        .center-area {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            min-width: 150px;
+            color: white;
             font-weight: 600;
         }
 
-        ul, ol {
-            margin: 1rem 0 1rem 2rem;
+        .tile-mini {
+            display: inline-block;
+            width: 25px;
+            height: 35px;
+            background: white;
+            border: 1px solid #333;
+            border-radius: 3px;
+            margin: 2px;
+            font-size: 0.8rem;
+            line-height: 35px;
+            color: #e74c3c;
         }
 
-        li {
-            margin: 0.5rem 0;
+        .animation-controls {
+            margin: 1rem 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 0.5rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .step-indicator {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: 600;
+            color: #667eea;
         }
 
         .example {
@@ -172,22 +263,47 @@
             margin-bottom: 0.5rem;
         }
 
-        .btn {
+        .tooltip {
+            position: relative;
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-size: 1rem;
+            border-bottom: 2px dotted #667eea;
+            cursor: help;
+            color: #667eea;
             font-weight: 600;
-            transition: all 0.3s;
-            margin: 0.5rem 0.5rem 0.5rem 0;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            background-color: #2a5298;
+            color: #fff;
+            text-align: left;
+            border-radius: 8px;
+            padding: 1rem;
+            position: absolute;
+            z-index: 1000;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -150px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #2a5298 transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
         }
 
         .nav-buttons {
@@ -214,9 +330,13 @@
                 flex-direction: column;
             }
 
-            .nav-buttons {
-                flex-direction: column;
-                gap: 1rem;
+            .game-table {
+                height: 300px;
+            }
+
+            .tooltip .tooltiptext {
+                width: 250px;
+                margin-left: -125px;
             }
         }
     </style>
@@ -245,141 +365,4 @@
             <h3>Что такое Риичи Маджонг?</h3>
             <p>
                 Риичи маджонг — японская версия маджонга, популярная настольная игра для четырёх игроков. 
-                Это стратегическая игра, где нужно собирать комбинации из фишек, похожая на рамми или покер.
-            </p>
-
-            <div class="info-box">
-                <strong>🎯 Основная цель:</strong> Первым собрать выигрышную руку из 14 фишек, 
-                состоящую из 4 групп и 1 пары.
-            </div>
-
-            <h3>Структура выигрышной руки</h3>
-            <div class="card">
-                <p style="font-size: 1.3rem; text-align: center; font-weight: 600; margin: 0;">
-                    <span class="highlight">4 группы</span> + <span class="highlight">1 пара</span> = <span class="highlight">14 фишек</span>
-                </p>
-            </div>
-
-            <h3>Типы групп</h3>
-            
-            <div class="example">
-                <div class="example-title">🔹 Сет (刻子 Kotsu)</div>
-                <p>Три одинаковые фишки</p>
-                <p><strong>Примеры:</strong> 5-5-5 манзу, 東-東-東 (три восточных ветра)</p>
-            </div>
-
-            <div class="example">
-                <div class="example-title">🔹 Последовательность (順子 Shuntsu)</div>
-                <p>Три последовательные фишки одной масти</p>
-                <p><strong>Примеры:</strong> 4-5-6 пинзу, 7-8-9 соузу</p>
-                <p><strong>⚠️ Важно:</strong> Последовательности можно делать ТОЛЬКО из числовых мастей. 
-                Из ветров и драконов последовательности делать нельзя!</p>
-            </div>
-
-            <div class="example">
-                <div class="example-title">🔹 Пара (雀頭 Jantou)</div>
-                <p>Две одинаковые фишки</p>
-                <p><strong>Примеры:</strong> 8-8 манзу, 白-白 (два белых дракона)</p>
-            </div>
-
-            <h3>Примеры выигрышных рук</h3>
-            
-            <div class="card">
-                <p><strong>Пример 1:</strong></p>
-                <p>1-2-3 манзу | 4-4-4 пинзу | 7-8-9 соузу | 東-東-東 | 5-5 манзу</p>
-                <p><em>3 последовательности + 1 сет + 1 пара = выигрыш!</em></p>
-            </div>
-
-            <div class="card">
-                <p><strong>Пример 2:</strong></p>
-                <p>2-2-2 манзу | 5-5-5 пинзу | 9-9-9 соузу | 白-白-白 | 7-7 манзу</p>
-                <p><em>4 сета + 1 пара = выигрыш!</em></p>
-            </div>
-
-            <h3>Ход игры</h3>
-            
-            <ol>
-                <li><strong>Начало:</strong> Каждый игрок получает 13 фишек</li>
-                <li><strong>Ход игрока:</strong> Берёте 1 фишку из стены (становится 14), затем сбрасываете 1 фишку (остаётся 13)</li>
-                <li><strong>Сбросы:</strong> Все сброшенные фишки видны в центре стола</li>
-                <li><strong>Использование чужих сбросов:</strong> Можно взять чужой сброс для объявления выигрыша или формирования открытых групп</li>
-                <li><strong>Победа:</strong> Первый собравший правильную руку с хотя бы одним яку выигрывает раунд</li>
-            </ol>
-
-            <h3>Основные термины</h3>
-            
-            <div class="card">
-                <p><strong>Тенпай (聴牌)</strong> — рука, которой не хватает одной фишки до выигрыша. 
-                Вы "ждёте" нужную фишку.</p>
-            </div>
-
-            <div class="card">
-                <p><strong>Рон (ロン)</strong> — выигрыш на чужом сбросе. Вы объявляете "Рон!" и забираете сброшенную фишку для завершения руки.</p>
-            </div>
-
-            <div class="card">
-                <p><strong>Цумо (ツモ)</strong> — выигрыш на фишке, взятой из стены. Вы сами вытянули нужную фишку.</p>
-            </div>
-
-            <div class="card">
-                <p><strong>Чи (チー)</strong> — взять сброс игрока слева для формирования последовательности. 
-                Группа становится открытой.</p>
-            </div>
-
-            <div class="card">
-                <p><strong>Пон (ポン)</strong> — взять сброс любого игрока для формирования сета. 
-                Группа становится открытой.</p>
-            </div>
-
-            <div class="card">
-                <p><strong>Кан (カン)</strong> — объявить четвёрку одинаковых фишек. Даёт дополнительную фишку из стены.</p>
-            </div>
-
-            <h3>Закрытая vs Открытая рука</h3>
-            
-            <div class="info-box">
-                <p><strong>Закрытая рука:</strong> Вы не использовали чужие сбросы (не объявляли Чи/Пон/Кан). 
-                Все ваши фишки скрыты от других игроков.</p>
-                <p><strong>✅ Преимущества:</strong> Доступны все яку, можно объявить Риичи</p>
-            </div>
-
-            <div class="warning-box">
-                <p><strong>Открытая рука:</strong> Вы использовали чужие сбросы. Открытые группы видны всем.</p>
-                <p><strong>⚠️ Недостатки:</strong> Многие яку недоступны, рука стоит меньше очков</p>
-            </div>
-
-            <h3>Самое важное правило!</h3>
-            
-            <div class="warning-box">
-                <strong>⚠️ КРИТИЧЕСКИ ВАЖНО:</strong> Для победы недостаточно просто собрать 4 группы + пара. 
-                Рука ОБЯЗАТЕЛЬНО должна содержать хотя бы одно <strong>«яку»</strong> (специальную комбинацию)!
-                <br><br>
-                Без яку вы НЕ можете объявить выигрыш, даже если у вас правильная структура руки!
-            </div>
-
-            <h3>С чего начать?</h3>
-            
-            <div class="success-box">
-                <p><strong>📚 Путь новичка:</strong></p>
-                <ol style="margin-left: 1.5rem;">
-                    <li>Запомните структуру: 4 группы + 1 пара = 14 фишек</li>
-                    <li>Изучите все фишки в разделе "Фишки"</li>
-                    <li>Освойте 3 базовых яку: Риичи, Танъяо, Якухай</li>
-                    <li>Сыграйте несколько партий онлайн с обучением</li>
-                    <li>Постепенно изучайте более сложные яку</li>
-                </ol>
-            </div>
-
-            <div class="nav-buttons">
-                <a href="index.html" class="btn">← Главная</a>
-                <a href="tiles.html" class="btn">Фишки →</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>🀄 Риичи Маджонг - Интерактивный учебник</p>
-        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Создано для изучения японского маджонга</p>
-    </footer>
-</body>
-</html>
+                Это стратегическая игра, где нужно собирать комбинации из фишек, похожая на рамми
