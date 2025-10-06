@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практика - Риичи Маджонг</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #1e3c72;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0.5rem;
+        }
+
+        .nav-link {
+            color: #1e3c72;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-radius: 8px;
+            margin: 0.25rem;
+        }
+
+        .nav-link:hover {
+            background: #f0f4ff;
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #2a5298;
+            margin: 1.5rem 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        .quiz-container {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-title {
+            color: #667eea;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .quiz-score {
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .tile-display {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            justify-content: center;
+        }
+
+        .tile {
+            width: 45px;
+            height: 65px;
+            background: white;
+            border: 2px solid #333;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .tile:hover {
+            transform: translateY(-5px) scale(1.08);
+        }
+
+        .tile.man { color: #c62828; border-color: #c62828; }
+        .tile.pin { color: #1565c0; border-color: #1565c0; }
+        .tile.sou { color: #2e7d32; border-color: #2e7d32; }
+        .tile.honor { color: #6a1b9a; border-color: #6a1b9a; }
+
+        .quiz-option {
+            background: white;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #e0e0e0;
+            font-weight: 500;
+        }
+
+        .quiz-option:hover:not(.correct):not(.wrong) {
+            border-color: #667eea;
+            transform: translateX(5px);
+            background: #f0f4ff;
+        }
+
+        .quiz-option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+            animation: correctPulse 0.5s;
+        }
+
+        .quiz-option.wrong {
+            background: #f8d7da;
+            border-color: #dc3545;
+            animation: shake 0.5s;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .quiz-result {
+            margin-top: 1rem;
+            font-weight: 600;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .hand-builder {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+
+        .hand-area {
+            min-height: 100px;
+            background: white;
+            border: 3px dashed #667eea;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .empty-message {
+            color: #999;
+            width: 100%;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .resource-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s;
+        }
+
+        .resource-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .resource-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .resource-tag {
+            display: inline-block;
+            background: #e7f3ff;
+            color: #2196F3;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin: 0.25rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .nav-container {
+                flex-direction: column;
+            }
+
+            .tile {
+                width: 35px;
+                height: 50px;
+                font-size: 1rem;
+            }
+
+            .quiz-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🀄 Риичи Маджонг</h1>
+        <p>Интерактивный учебник по японскому маджонгу</p>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-link">Главная</a>
+            <a href="basics.html" class="nav-link">Основы</a>
+            <a href="tiles.html" class="nav-link">Фишки</a>
+            <a href="yaku.html" class="nav-link">Яку</a>
+            <a href="scoring.html" class="nav-link">Очки</a>
+            <a href="practice.html" class="nav-link active">Практика</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="content">
+            <h2>Практика и тренировка</h2>
+            
+            <div class="info-box">
+                <strong>🎯 Цель раздела:</strong> Проверить свои знания с помощью интерактивных тестов и узнать, где можно практиковаться дальше!
+            </div>
+
+            <div class="success-box">
+                <strong>📊 Ваш прогресс:</strong>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%">0%</div>
+                </div>
+                <p style="margin-top: 0.5rem;">Правильных ответов: <span id="correctCount">0</span> из <span id="totalCount">5</span></p>
+            </div>
+
+            <h3>Тест 1: Распознавание яку</h3>
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <div class="quiz-title">Какое яку в этой руке?</div>
+                    <div class="quiz-score" id="score1">Не отвечено</div>
+                </div>
+                <div class="tile-display">
+                    <div class="tile man"><img src="tiles/regular/Man2.svg" alt="2m"></div>
+                    <div class="tile man"><img src="tiles/regular/Man3.svg" alt="3m"></div>
+                    <div class="tile man"><img src="tiles/regular/Man4.svg" alt="4m"></div>
+                    <div class="tile pin"><img src="tiles/regular/Pin3.svg" alt="3p"></div>
+                    <div class="tile pin"><img src="tiles/regular/Pin4.svg" alt="4p"></div>
+                    <div class="tile pin"><img src="tiles/regular/Pin5.svg" alt="5p"></div>
+                    <div class="tile sou"><img src="tiles/regular/Sou6.svg" alt="6s"></div>
+                    <div class="tile sou"><img src="tiles/regular/Sou7.svg" alt="7s"></div>
+                    <div class="tile sou"><img src="tiles/regular/Sou8.svg" alt="8s"></div>
+                    <div class="tile man"><img src="tiles/regular/Man5.svg" alt="5m"></div>
+                    <div class="tile man"><img src="tiles/regular/Man6.svg" alt="6m"></div>
+                    <div class="tile man"><img src="tiles/regular/Man7.svg" alt="7m"></div>
+                    <div class="tile pin"><img src="tiles/regular/Pin8.svg" alt="8p"></div>
+                    <div class="tile pin"><img src="tiles/regular/Pin8.svg" alt="8p"></div>
+                </div>
+                <div class="quiz-option" onclick="checkAnswer1(this, false)">❌ Якухай</div>
+                <div class="quiz-option" onclick="checkAnswer1(this, false)">❌ Чинитсу</div>
+                <div class="quiz-option" onclick="checkAnswer1(this, true)">✅ Танъяо</div>
+                <div class="quiz-option" onclick="checkAnswer1(this, false)">❌ Тойтой</div>
+                <div id="result1" class="quiz-result" style="display: none;"></div>
+            </div>
+
+            <h3>Тест 2: Подсчёт групп</h3>
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <div class="quiz-title">Сколько завершённых групп в этой руке?</div>
+                    <div class="quiz-score" id="score2">Не отвечено</div>
+                </div>
+                <div class="tile-display">
+                    <div class="tile man"><img src="tiles/regular/Man1.svg" alt="1m"></div>
+                    <div class="tile man"><img src="tiles/regular/Man1.svg" alt="1m"></div>
+                    <div class="tile man"><img src="tiles/regular/Man1.svg" alt="1m"></div>
+                    <div class="tile pin"><img src="tiles/regular/Pin4.svg" alt="4p"></div>
+                    <div class="tile pin"><img src="tiles/regular/Pin5.svg" alt="5p"></div>
+                    <div class="tile pin"><img src="tiles/regular/Pin6.svg" alt="6p"></div>
+                    <div class="tile honor"><img src="tiles/regular/Ton.svg" alt="東"></div>
+                    <div class="tile honor"><img src="tiles/regular/Ton.svg" alt="東"></div>
+                    <div class="tile sou"><img src="tiles/regular/Sou3.svg" alt="3s"></div>
+                    <div class="tile sou"><img src="tiles/regular/Sou4.svg" alt="4s"></div>
+                    <div class="tile sou"><img src="tiles/regular/Sou6.svg" alt="6s"></div>
+                    <div class="tile man"><img src="tiles/regular/Man9.svg" alt="9m"></div>
+                    <div class="tile man"><img src="tiles/regular/Man9.svg" alt="9m"></div>
+                </div>
+                <div class="quiz-option" onclick="checkAnswer2(this, false)">❌ 4 группы</div>
+                <div class="quiz-option" onclick="checkAnswer2(this, true)">✅ 2 группы</div>
+                <div class="quiz-option" onclick="checkAnswer2(this, false)">❌ 3 группы</div>
+                <div class="quiz-option" onclick="checkAnswer2(this, false)">❌ 1 группа</div>
+                <div id="result2" class="quiz-result" style="display: none;"></div>
+            </div>
+
+            <h3>Тест 3: Определение стоимости</h3>
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <div class="quiz-title">Сколько стоит рука с 6 ханами на Рон (для не-дилера)?</div>
+                    <div class="quiz-score" id="score3">Не отвечено</div>
+                </div>
+                <div class="quiz-option" onclick="checkAnswer3(this, false)">❌ 8,000 очков</div>
+                <div class="quiz-option" onclick="checkAnswer3(this, true)">✅ 12,000 очков (Ханеман)</div>
+                <div class="quiz-option" onclick="checkAnswer3(this, false)">❌ 16,000 очков</div>
+                <div class="quiz-option" onclick="checkAnswer3(this, false)">❌ 24,000 очков</div>
+                <div id="result3" class="quiz-result" style="display: none;"></div>
+            </div>
+
+            <h3>Тест 4: Типы фишек</h3>
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <div class="quiz-title">Что такое "терминалы"?</div>
+                    <div class="quiz-score" id="score4">Не отвечено</div>
+                </div>
+                <div class="quiz-option" onclick="checkAnswer4(this, false)">❌ Фишки 2-8</div>
+                <div class="quiz-option" onclick="checkAnswer4(this, true)">✅ Фишки 1 и 9</div>
+                <div class="quiz-option" onclick="checkAnswer4(this, false)">❌ Все почётные фишки</div>
+                <div class="quiz-option" onclick="checkAnswer4(this, false)">❌ Только драконы</div>
+                <div id="result4" class="quiz-result" style="display: none;"></div>
+            </div>
+
+            <h3>Тест 5: Правила игры</h3>
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <div class="quiz-title">Можно ли выиграть без яку?</div>
+                    <div class="quiz-score" id="score5">Не отвечено</div>
+                </div>
+                <div class="quiz-option" onclick="checkAnswer5(this, false)">❌ Да, если есть правильная структура</div>
+                <div class="quiz-option" onclick="checkAnswer5(this, true)">✅ Нет, нужно минимум 1 яку</div>
+                <div class="quiz-option" onclick="checkAnswer5(this, false)">❌ Да, если есть дора</div>
+                <div class="quiz-option" onclick="checkAnswer5(this, false)">❌ Зависит от правил</div>
+                <div id="result5" class="quiz-result" style="display: none;"></div>
+            </div>
+
+            <h3>Конструктор рук</h3>
+            <div class="hand-builder">
+                <p><strong>Нажимайте на фишки, чтобы добавить их в руку.</strong> Попробуйте собрать выигрышную комбинацию!</p>
+                
+                <div style="margin: 1rem 0;">
+                    <strong>Доступные фишки:</strong>
+                </div>
+                <div class="tile-display">
+                    <div class="tile man" onclick="addTile('tiles/regular/Man1.svg', 'man', '1m')"><img src="tiles/regular/Man1.svg" alt="1m"></div>
+                    <div class="tile man" onclick="addTile('tiles/regular/Man2.svg', 'man', '2m')"><img src="tiles/regular/Man2.svg" alt="2m"></div>
+                    <div class="tile man" onclick="addTile('tiles/regular/Man3.svg', 'man', '3m')"><img src="tiles/regular/Man3.svg" alt="3m"></div>
+                    <div class="tile man" onclick="addTile('tiles/regular/Man4.svg', 'man', '4m')"><img src="tiles/regular/Man4.svg" alt="4m"></div>
+                    <div class="tile man" onclick="addTile('tiles/regular/Man5.svg', 'man', '5m')"><img src="tiles/regular/Man5.svg" alt="5m"></div>
+                    <div class="tile man" onclick="addTile('tiles/regular/Man6.svg', 'man', '6m')"><img src="tiles/regular/Man6.svg" alt="6m"></div>
+                    <div class="tile pin" onclick="addTile('tiles/regular/Pin1.svg', 'pin', '1p')"><img src="tiles/regular/Pin1.svg" alt="1p"></div>
+                    <div class="tile pin" onclick="addTile('tiles/regular/Pin2.svg', 'pin', '2p')"><img src="tiles/regular/Pin2.svg" alt="2p"></div>
+                    <div class="tile pin" onclick="addTile('tiles/regular/Pin3.svg', 'pin', '3p')"><img src="tiles/regular/Pin3.svg" alt="3p"></div>
+                    <div class="tile sou" onclick="addTile('tiles/regular/Sou1.svg', 'sou', '1s')"><img src="tiles/regular/Sou1.svg" alt="1s"></div>
+                    <div class="tile sou" onclick="addTile('tiles/regular/Sou2.svg', 'sou', '2s')"><img src="tiles/regular/Sou2.svg" alt="2s"></div>
+                    <div class="tile sou" onclick="addTile('tiles/regular/Sou3.svg', 'sou', '3s')"><img src="tiles/regular/Sou3.svg" alt="3s"></div>
+                    <div class="tile honor" onclick="addTile('tiles/regular/Ton.svg', 'honor', '東')"><img src="tiles/regular/Ton.svg" alt="東"></div>
+                    <div class="tile honor" onclick="addTile('tiles/regular/Haku.svg', 'honor', '白')"><img src="tiles/regular/Haku.svg" alt="白"></div>
+                    <div class="tile honor" onclick="addTile('tiles/regular/Chun.svg', 'honor', '中')"><img src="tiles/regular/Chun.svg" alt="中"></div>
+                </div>
+                
+                <div style="margin: 1rem 0;">
+                    <strong>Ваша рука (<span id="tileCount">0</span>/14):</strong>
+                </div>
+                <div class="hand-area" id="handArea">
+                    <div class="empty-message">Нажимайте на фишки выше, чтобы добавить их сюда</div>
+                </div>
+                
+                <button class="btn btn-secondary" onclick="clearHand()">🗑️ Очистить руку</button>
+                <button class="btn" onclick="checkHand()">✓ Проверить руку</button>
+                <div id="handResult" style="margin-top: 1rem; font-weight: bold;"></div>
+            </div>
+
+            <h3 id="resources">📚 Полезные ресурсы</h3>
+
+            <div class="success-box">
+                <h4>🎮 Онлайн-площадки для игры</h4>
+                <p>Лучший способ научиться — это играть! Вот проверенные платформы:</p>
+            </div>
+
+            <div class="resource-card">
+                <h4>🌸 Mahjong Soul (雀魂)</h4>
+                <p>Красивая онлайн-платформа с отличным обучением для новичков. Доступна на ПК и мобильных устройствах.</p>
+                <p style="margin-top: 0.5rem;">
+                    <span class="resource-tag">Новичкам</span>
+                    <span class="resource-tag">Русский язык</span>
+                    <span class="resource-tag">Бесплатно</span>
+                </p>
+                <p style="margin-top: 0.5rem;"><strong>Ссылка:</strong> mahjongsoul.com</p>
+            </div>
+
+            <div class="resource-card">
+                <h4>🎴 Tenhou (天鳳)</h4>
+                <p>Классическая площадка для серьёзных игроков. Более строгий интерфейс, но отличная игровая механика.</p>
+                <p style="margin-top: 0.5rem;">
+                    <span class="resource-tag">Опытным</span>
+                    <span class="resource-tag">Английский/Японский</span>
+                    <span class="resource-tag">Бесплатно</span>
+                </p>
+                <p style="margin-top: 0.5rem;"><strong>Ссылка:</strong> tenhou.net</p>
+            </div>
+
+            <div class="resource-card">
+                <h4>📱 Ron2</h4>
+                <p>Мобильное приложение для iOS и Android. Удобно для игры в дороге.</p>
+                <p style="margin-top: 0.5rem;">
+                    <span class="resource-tag">Мобильное</span>
+                    <span class="resource-tag">Английский</span>
+                    <span class="resource-tag">Бесплатно</span>
+                </p>
+            </div>
+
+            <div class="success-box">
+                <h4>📖 Обучающие материалы</h4>
+            </div>
+
+            <div class="resource-card">
+                <h4>📘 Riichi Book I</h4>
+                <p>Отличная книга по базовой стратегии риичи маджонга. Доступна бесплатно в PDF.</p>
+                <p style="margin-top: 0.5rem;">
+                    <span class="resource-tag">Стратегия</span>
+                    <span class="resource-tag">Английский</span>
+                    <span class="resource-tag">PDF</span>
+                </p>
+            </div>
+
+            <div class="resource-card">
+                <h4>🌐 riichi.wiki</h4>
+                <p>Энциклопедия по риичи маджонгу на английском языке. Подробные статьи обо всех аспектах игры.</p>
+                <p style="margin-top: 0.5rem;">
+                    <span class="resource-tag">Справочник</span>
+                    <span class="resource-tag">Английский</span>
+                    <span class="resource-tag">Онлайн</span>
+                </p>
+            </div>
+
+            <div class="resource-card">
+                <h4>🇷🇺 arcturus.su</h4>
+                <p>Русскоязычный ресурс по маджонгу. Статьи, переводы, сообщество игроков.</p>
+                <p style="margin-top: 0.5rem;">
+                    <span class="resource-tag">Русский язык</span>
+                    <span class="resource-tag">Сообщество</span>
+                    <span class="resource-tag">Онлайн</span>
+                </p>
+            </div>
+
+            <div class="info-box">
+                <h4>💡 План обучения для новичка</h4>
+                <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li><strong>Неделя 1-2:</strong> Изучите основы, фишки и три базовых яку</li>
+                    <li><strong>Неделя 3-4:</strong> Начните играть на Mahjong Soul с обучением</li>
+                    <li><strong>Месяц 2:</strong> Изучите систему подсчёта очков</li>
+                    <li><strong>Месяц 3:</strong> Освойте сложные яку и базовую стратегию</li>
+                    <li><strong>Месяц 4+:</strong> Углубляйтесь в тактику, читайте книги</li>
+                </ol>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="scoring.html" class="btn">← Очки</a>
+                <a href="index.html" class="btn">На главную</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>🀄 Риичи Маджонг - Интерактивный учебник</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Создано для изучения японского маджонга</p>
+        <p style="font-size: 0.85rem; margin-top: 1rem;">Удачи в игре! 🎴</p>
+    </footer>
+
+    <script>
+        let playerHand = [];
+        let correctAnswers = 0;
+        let totalQuestions = 5;
+        let answeredQuestions = 0;
+
+        function updateProgress() {
+            const percentage = (correctAnswers / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressBar').textContent = Math.round(percentage) + '%';
+            document.getElementById('correctCount').textContent = correctAnswers;
+            document.getElementById('totalCount').textContent = totalQuestions;
+        }
+
+        function checkAnswer1(element, isCorrect) {
+            if (element.parentElement.querySelector('.correct, .wrong')) return;
+            
+            const options = element.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+            
+            element.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const result = document.getElementById('result1');
+            result.style.display = 'block';
+            
+            if (isCorrect) {
+                result.textContent = '✓ Правильно! Это Танъяо — все фишки простые (2-8), без терминалов и почётных.';
+                result.style.color = '#28a745';
+                result.style.background = '#d4edda';
+                document.getElementById('score1').textContent = '✓ Верно';
+                document.getElementById('score1').style.background = '#28a745';
+                correctAnswers++;
+            } else {
+                result.textContent = '✗ Неверно. Правильный ответ: Танъяо. Все фишки в руке находятся в диапазоне 2-8.';
+                result.style.color = '#721c24';
+                result.style.background = '#f8d7da';
+                document.getElementById('score1').textContent = '✗ Неверно';
+                document.getElementById('score1').style.background = '#dc3545';
+            }
+            
+            answeredQuestions++;
+            updateProgress();
+        }
+
+        function checkAnswer2(element, isCorrect) {
+            if (element.parentElement.querySelector('.correct, .wrong')) return;
+            
+            const options = element.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+            
+            element.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const result = document.getElementById('result2');
+            result.style.display = 'block';
+            
+            if (isCorrect) {
+                result.textContent = '✓ Правильно! Две завершённые группы: 1-1-1m (сет) и 4-5-6p (последовательность).';
+                result.style.color = '#28a745';
+                result.style.background = '#d4edda';
+                document.getElementById('score2').textContent = '✓ Верно';
+                document.getElementById('score2').style.background = '#28a745';
+                correctAnswers++;
+            } else {
+                result.textContent = '✗ Неверно. В руке только 2 завершённые группы: сет из единиц и последовательность 4-5-6p.';
+                result.style.color = '#721c24';
+                result.style.background = '#f8d7da';
+                document.getElementById('score2').textContent = '✗ Неверно';
+                document.getElementById('score2').style.background = '#dc3545';
+            }
+            
+            answeredQuestions++;
+            updateProgress();
+        }
+
+        function checkAnswer3(element, isCorrect) {
+            if (element.parentElement.querySelector('.correct, .wrong')) return;
+            
+            const options = element.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+            
+            element.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const result = document.getElementById('result3');
+            result.style.display = 'block';
+            
+            if (isCorrect) {
+                result.textContent = '✓ Правильно! 6 ханов = Ханеман = 12,000 очков на Рон для не-дилера.';
+                result.style.color = '#28a745';
+                result.style.background = '#d4edda';
+                document.getElementById('score3').textContent = '✓ Верно';
+                document.getElementById('score3').style.background = '#28a745';
+                correctAnswers++;
+            } else {
+                result.textContent = '✗ Неверно. 6 ханов = Ханеман = 12,000 очков. Проверьте таблицу в разделе "Очки"!';
+                result.style.color = '#721c24';
+                result.style.background = '#f8d7da';
+                document.getElementById('score3').textContent = '✗ Неверно';
+                document.getElementById('score3').style.background = '#dc3545';
+            }
+            
+            answeredQuestions++;
+            updateProgress();
+        }
+
+        function checkAnswer4(element, isCorrect) {
+            if (element.parentElement.querySelector('.correct, .wrong')) return;
+            
+            const options = element.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+            
+            element.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const result = document.getElementById('result4');
+            result.style.display = 'block';
+            
+            if (isCorrect) {
+                result.textContent = '✓ Правильно! Терминалы — это фишки 1 и 9 каждой масти (1m, 9m, 1p, 9p, 1s, 9s).';
+                result.style.color = '#28a745';
+                result.style.background = '#d4edda';
+                document.getElementById('score4').textContent = '✓ Верно';
+                document.getElementById('score4').style.background = '#28a745';
+                correctAnswers++;
+            } else {
+                result.textContent = '✗ Неверно. Терминалы — это фишки 1 и 9. Фишки 2-8 называются "простые".';
+                result.style.color = '#721c24';
+                result.style.background = '#f8d7da';
+                document.getElementById('score4').textContent = '✗ Неверно';
+                document.getElementById('score4').style.background = '#dc3545';
+            }
+            
+            answeredQuestions++;
+            updateProgress();
+        }
+
+        function checkAnswer5(element, isCorrect) {
+            if (element.parentElement.querySelector('.correct, .wrong')) return;
+            
+            const options = element.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+            
+            element.classList.add(isCorrect ? 'correct' : 'wrong');
+            
+            const result = document.getElementById('result5');
+            result.style.display = 'block';
+            
+            if (isCorrect) {
+                result.textContent = '✓ Правильно! Без яку нельзя объявить выигрыш, даже если структура руки правильная. Это важнейшее правило!';
+                result.style.color = '#28a745';
+                result.style.background = '#d4edda';
+                document.getElementById('score5').textContent = '✓ Верно';
+                document.getElementById('score5').style.background = '#28a745';
+                correctAnswers++;
+            } else {
+                result.textContent = '✗ Неверно. Нужно минимум одно яку для выигрыша! Даже дора не считается яку.';
+                result.style.color = '#721c24';
+                result.style.background = '#f8d7da';
+                document.getElementById('score5').textContent = '✗ Неверно';
+                document.getElementById('score5').style.background = '#dc3545';
+            }
+            
+            answeredQuestions++;
+            updateProgress();
+        }
+
+        function addTile(tileSrc, type, name) {
+            if (playerHand.length >= 14) {
+                alert('Максимум 14 фишек в руке!');
+                return;
+            }
+            
+            playerHand.push({tileSrc, type, name});
+            updateHandDisplay();
+        }
+
+        function updateHandDisplay() {
+            const handArea = document.getElementById('handArea');
+            const tileCount = document.getElementById('tileCount');
+            
+            handArea.innerHTML = '';
+            
+            if (playerHand.length === 0) {
+                handArea.innerHTML = '<div class="empty-message">Нажимайте на фишки выше, чтобы добавить их сюда</div>';
+            } else {
+                playerHand.forEach((item, index) => {
+                    const tileDiv = document.createElement('div');
+                    tileDiv.className = `tile ${item.type}`;
+                    tileDiv.innerHTML = `<img src="${item.tileSrc}" alt="${item.name}">`;
+                    tileDiv.onclick = () => removeTile(index);
+                    tileDiv.title = 'Нажмите, чтобы удалить';
+                    handArea.appendChild(tileDiv);
+                });
+            }
+            
+            tileCount.textContent = playerHand.length;
+        }
+
+        function removeTile(index) {
+            playerHand.splice(index, 1);
+            updateHandDisplay();
+        }
+
+        function clearHand() {
+            playerHand = [];
+            updateHandDisplay();
+            document.getElementById('handResult').textContent = '';
+        }
+
+        function checkHand() {
+            const result = document.getElementById('handResult');
+            
+            if (playerHand.length !== 14) {
+                result.textContent = `❌ В выигрышной руке должно быть 14 фишек. У вас: ${playerHand.length}`;
+                result.style.color = '#dc3545';
+                return;
+            }
+            
+            // Простая проверка на наличие пары
+            const tileCounts = {};
+            playerHand.forEach(item => {
+                tileCounts[item.name] = (tileCounts[item.name] || 0) + 1;
+            });
+            
+            const hasPair = Object.values(tileCounts).some(count => count >= 2);
+            const hasTriplet = Object.values(tileCounts).some(count => count >= 3);
+            
+            if (hasPair && hasTriplet) {
+                result.textContent = '✓ У вас 14 фишек, есть пара и сеты! Хорошее начало. Проверьте, есть ли у вас яку!';
+                result.style.color = '#28a745';
+            } else if (hasPair) {
+                result.textContent = '⚠️ У вас 14 фишек и есть пара, но нужны ещё группы (сеты или последовательности).';
+                result.style.color = '#ffc107';
+            } else {
+                result.textContent = '⚠️ У вас 14 фишек, но нет пары (двух одинаковых фишек). Для выигрыша нужна пара!';
+                result.style.color = '#ffc107';
+            }
+        }
+
+        // Initialize progress
+        updateProgress();
+    </script>
+</body>
+</html>
