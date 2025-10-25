@@ -3,304 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Система подсчёта очков в риичи-маджонге: хан, фу, манган, ханеман, байман, якуман с примерами и таблицами.">
+    <meta name="keywords" content="очки маджонга, хан, фу, манган, ханеман, байман, якуман, подсчёт очков, scoring">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🀄</text></svg>">
+    
     <title>Очки - Риичи Маджонг</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: #333;
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
-        .header h1 {
-            color: #1e3c72;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .header p {
-            color: #666;
-            font-size: 1.1rem;
-        }
-
-        nav {
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            padding: 0.5rem;
-        }
-
-        .nav-link {
-            color: #1e3c72;
-            text-decoration: none;
-            padding: 1rem 1.5rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            border-radius: 8px;
-            margin: 0.25rem;
-        }
-
-        .nav-link:hover {
-            background: #f0f4ff;
-            transform: translateY(-2px);
-        }
-
-        .nav-link.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .content {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            animation: fadeIn 0.5s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 {
-            color: #1e3c72;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 0.5rem;
-        }
-
-        h3 {
-            color: #2a5298;
-            margin: 1.5rem 0 1rem;
-            font-size: 1.5rem;
-        }
-
-        p {
-            margin: 1rem 0;
-        }
-
-        .info-box {
-            background: #e7f3ff;
-            border-left: 4px solid #2196F3;
-            padding: 1rem;
-            margin: 1.5rem 0;
-            border-radius: 5px;
-        }
-
-        .warning-box {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 1rem;
-            margin: 1.5rem 0;
-            border-radius: 5px;
-        }
-
-        .success-box {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            padding: 1rem;
-            margin: 1.5rem 0;
-            border-radius: 5px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        td {
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        tr:hover {
-            background: #f8f9fa;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        .highlight-row {
-            background: #fff9c4 !important;
-            font-weight: 600;
-        }
-
-        .term-card {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-        }
-
-        .term-card h4 {
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-
-        .example-box {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .example-title {
-            color: #667eea;
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        .calculation {
-            background: white;
-            border: 2px solid #667eea;
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 1rem 0;
-            font-family: 'Courier New', monospace;
-        }
-
-        .calculation-step {
-            margin: 0.5rem 0;
-            padding: 0.5rem;
-            background: #f8f9fa;
-            border-radius: 4px;
-        }
-
-        .score-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            margin: 0.5rem 0.5rem 0.5rem 0;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .nav-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 2px solid #e0e0e0;
-        }
-
-        .comparison-table {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .comparison-card {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 1rem;
-        }
-
-        .comparison-card h4 {
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-top: 3rem;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-
-            .nav-container {
-                flex-direction: column;
-            }
-
-            .nav-buttons {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            table {
-                font-size: 0.85rem;
-            }
-
-            th, td {
-                padding: 0.5rem;
-            }
-
-            .comparison-table {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/pages.css">
 </head>
 <body>
     <div class="header">
@@ -316,10 +32,10 @@
             <a href="yaku.html" class="nav-link">Яку</a>
             <a href="scoring.html" class="nav-link active">Очки</a>
             <a href="practice.html" class="nav-link">Практика</a>
+            <a href="glossary.html" class="nav-link">Глоссарий</a>
         </div>
     </nav>
-
-    <div class="container">
+<div class="container">
         <div class="content">
             <h2>Система подсчёта очков</h2>
             
@@ -641,6 +357,10 @@
                 </ol>
             </div>
 
+                        <div class="progress-section">
+                <button class="btn btn-success mark-complete" data-page="scoring">✓ Отметить как изученное</button>
+            </div>
+
             <div class="nav-buttons">
                 <a href="yaku.html" class="btn">← Яку</a>
                 <a href="practice.html" class="btn">Практика →</a>
@@ -652,5 +372,8 @@
         <p>🀄 Риичи Маджонг - Интерактивный учебник</p>
         <p style="font-size: 0.9rem; margin-top: 0.5rem;">Создано для изучения японского маджонга</p>
     </footer>
+    <!-- Progress Tracking -->
+    <script src="js/progress.js"></script>
 </body>
 </html>
+

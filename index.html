@@ -3,262 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Интерактивный учебник по японскому риичи-маджонгу на русском языке. Полное руководство с правилами, яку, подсчетом очков и практическими тестами.">
+    <meta name="keywords" content="маджонг, риичи, японский маджонг, обучение, правила, яку, фишки, тайлы, учебник">
+    <meta name="author" content="Riichi Mahjong Tutorial">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Риичи Маджонг - Интерактивный учебник">
+    <meta property="og:description" content="Изучайте японский маджонг с интерактивным учебником на русском языке">
+    <meta property="og:url" content="https://your-username.github.io/riichi-mahjong-tutorial/">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🀄</text></svg>">
+    
     <title>Риичи Маджонг - Интерактивный учебник</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: #333;
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
-        .header h1 {
-            color: #1e3c72;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .header p {
-            color: #666;
-            font-size: 1.1rem;
-        }
-
-        nav {
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            padding: 0.5rem;
-        }
-
-        .nav-link {
-            color: #1e3c72;
-            text-decoration: none;
-            padding: 1rem 1.5rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            border-radius: 8px;
-            margin: 0.25rem;
-        }
-
-        .nav-link:hover {
-            background: #f0f4ff;
-            transform: translateY(-2px);
-        }
-
-        .nav-link.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .content {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            animation: fadeIn 0.5s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 {
-            color: #1e3c72;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 0.5rem;
-        }
-
-        h3 {
-            color: #2a5298;
-            margin: 1.5rem 0 1rem;
-            font-size: 1.5rem;
-        }
-
-        .card {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            transition: all 0.3s;
-        }
-
-        .card:hover {
-            border-color: #667eea;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .card h3 {
-            margin-top: 0;
-        }
-
-        .info-box {
-            background: #e7f3ff;
-            border-left: 4px solid #2196F3;
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 5px;
-        }
-
-        .warning-box {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 5px;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .feature-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 2px solid #e0e0e0;
-            transition: all 0.3s;
-            text-align: center;
-        }
-
-        .feature-card:hover {
-            border-color: #667eea;
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            margin: 0.5rem 0.5rem 0.5rem 0;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Tooltip styles */
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            border-bottom: 2px dotted #667eea;
-            cursor: help;
-            color: #667eea;
-            font-weight: 600;
-        }
-
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 300px;
-            background-color: #2a5298;
-            color: #fff;
-            text-align: left;
-            border-radius: 8px;
-            padding: 1rem;
-            position: absolute;
-            z-index: 1000;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -150px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
-        .tooltip .tooltiptext::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #2a5298 transparent transparent transparent;
-        }
-
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-top: 3rem;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-
-            .nav-container {
-                flex-direction: column;
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .tooltip .tooltiptext {
-                width: 250px;
-                margin-left: -125px;
-            }
-        }
-    </style>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/pages.css">
 </head>
 <body>
     <div class="header">
@@ -285,6 +50,40 @@
                 Риичи маджонг — это захватывающая японская версия маджонга, сочетающая стратегию, 
                 тактику и элемент удачи. Этот учебник поможет вам освоить правила и начать играть!
             </p>
+
+            <!-- Индикатор прогресса -->
+            <div class="success-box" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
+                <h3 style="margin-top: 0; color: var(--color-accent);">📊 Ваш прогресс обучения</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%">0%</div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--color-accent);" id="progressText">0%</div>
+                        <div style="font-size: 0.9rem; color: var(--color-gray-dark);">Общий прогресс</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--color-success);" id="sectionsCount">0/5</div>
+                        <div style="font-size: 0.9rem; color: var(--color-gray-dark);">Изучено разделов</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--color-info);" id="testsCount">0/5</div>
+                        <div style="font-size: 0.9rem; color: var(--color-gray-dark);">Пройдено тестов</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--color-warning);" id="yakuCount">0</div>
+                        <div style="font-size: 0.9rem; color: var(--color-gray-dark);">Изучено яку</div>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; text-align: center;">
+                    <button onclick="progressTracker.resetProgress()" class="btn" style="background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%); font-size: 0.9rem; padding: 0.5rem 1rem;">
+                        🔄 Сбросить прогресс
+                    </button>
+                </div>
+            </div>
+
+            <!-- Рекомендация следующего раздела -->
+            <div id="nextRecommendation"></div>
 
             <div class="feature-grid">
                 <div class="feature-card">
@@ -428,5 +227,8 @@
         <p>🀄 Риичи Маджонг - Интерактивный учебник</p>
         <p style="font-size: 0.9rem; margin-top: 0.5rem;">Создано для изучения японского маджонга</p>
     </footer>
+
+    <!-- External JavaScript -->
+    <script src="js/progress.js"></script>
 </body>
 </html>

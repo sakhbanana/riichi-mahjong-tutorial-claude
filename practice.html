@@ -3,385 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Интерактивные упражнения для практики риичи-маджонга: квизы, построение рук, определение тенпая и яку.">
+    <meta name="keywords" content="практика маджонга, квиз, упражнения, построение руки, hand builder, тенпай, yaku quiz">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🀄</text></svg>">
+    
     <title>Практика - Риичи Маджонг</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: #333;
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
-        .header h1 {
-            color: #1e3c72;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .header p {
-            color: #666;
-            font-size: 1.1rem;
-        }
-
-        nav {
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            padding: 0.5rem;
-        }
-
-        .nav-link {
-            color: #1e3c72;
-            text-decoration: none;
-            padding: 1rem 1.5rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            border-radius: 8px;
-            margin: 0.25rem;
-        }
-
-        .nav-link:hover {
-            background: #f0f4ff;
-            transform: translateY(-2px);
-        }
-
-        .nav-link.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .content {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            animation: fadeIn 0.5s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 {
-            color: #1e3c72;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 0.5rem;
-        }
-
-        h3 {
-            color: #2a5298;
-            margin: 1.5rem 0 1rem;
-            font-size: 1.5rem;
-        }
-
-        .quiz-container {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin: 1.5rem 0;
-        }
-
-        .quiz-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .quiz-title {
-            color: #667eea;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .quiz-score {
-            background: #667eea;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-
-        .tile-display {
-            display: flex;
-            gap: 0.4rem;
-            flex-wrap: wrap;
-            margin: 1rem 0;
-            padding: 1rem;
-            background: white;
-            border-radius: 8px;
-            justify-content: center;
-        }
-
-        .tile {
-            width: 45px;
-            height: 65px;
-            background: white;
-            border: 2px solid #333;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tile img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .tile:hover {
-            transform: translateY(-5px) scale(1.08);
-        }
-
-        .tile.man { color: #c62828; border-color: #c62828; }
-        .tile.pin { color: #1565c0; border-color: #1565c0; }
-        .tile.sou { color: #2e7d32; border-color: #2e7d32; }
-        .tile.honor { color: #6a1b9a; border-color: #6a1b9a; }
-
-        .quiz-option {
-            background: white;
-            padding: 1rem;
-            margin: 0.5rem 0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid #e0e0e0;
-            font-weight: 500;
-        }
-
-        .quiz-option:hover:not(.correct):not(.wrong) {
-            border-color: #667eea;
-            transform: translateX(5px);
-            background: #f0f4ff;
-        }
-
-        .quiz-option.correct {
-            background: #d4edda;
-            border-color: #28a745;
-            animation: correctPulse 0.5s;
-        }
-
-        .quiz-option.wrong {
-            background: #f8d7da;
-            border-color: #dc3545;
-            animation: shake 0.5s;
-        }
-
-        @keyframes correctPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        .quiz-result {
-            margin-top: 1rem;
-            font-weight: 600;
-            padding: 1rem;
-            border-radius: 8px;
-        }
-
-        .hand-builder {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin: 1.5rem 0;
-        }
-
-        .hand-area {
-            min-height: 100px;
-            background: white;
-            border: 3px dashed #667eea;
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 1rem 0;
-            display: flex;
-            gap: 0.4rem;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .empty-message {
-            color: #999;
-            width: 100%;
-            text-align: center;
-            font-style: italic;
-        }
-
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            margin: 0.5rem 0.5rem 0.5rem 0;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-secondary {
-            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
-        }
-
-        .info-box {
-            background: #e7f3ff;
-            border-left: 4px solid #2196F3;
-            padding: 1rem;
-            margin: 1.5rem 0;
-            border-radius: 5px;
-        }
-
-        .success-box {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            padding: 1rem;
-            margin: 1.5rem 0;
-            border-radius: 5px;
-        }
-
-        .resource-card {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            transition: all 0.3s;
-        }
-
-        .resource-card:hover {
-            border-color: #667eea;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .resource-card h4 {
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-
-        .resource-tag {
-            display: inline-block;
-            background: #e7f3ff;
-            color: #2196F3;
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            margin: 0.25rem;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 30px;
-            background: #e0e0e0;
-            border-radius: 15px;
-            overflow: hidden;
-            margin: 1rem 0;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: width 0.5s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-        }
-
-        .nav-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 2px solid #e0e0e0;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-top: 3rem;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-
-            .nav-container {
-                flex-direction: column;
-            }
-
-            .tile {
-                width: 35px;
-                height: 50px;
-                font-size: 1rem;
-            }
-
-            .quiz-header {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .nav-buttons {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-    </style>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/pages.css">
 </head>
 <body>
     <div class="header">
@@ -397,10 +32,10 @@
             <a href="yaku.html" class="nav-link">Яку</a>
             <a href="scoring.html" class="nav-link">Очки</a>
             <a href="practice.html" class="nav-link active">Практика</a>
+            <a href="glossary.html" class="nav-link">Глоссарий</a>
         </div>
     </nav>
-
-    <div class="container">
+<div class="container">
         <div class="content">
             <h2>Практика и тренировка</h2>
             
@@ -438,10 +73,10 @@
                     <div class="tile pin"><img src="tiles/regular/Pin8.svg" alt="8p"></div>
                     <div class="tile pin"><img src="tiles/regular/Pin8.svg" alt="8p"></div>
                 </div>
-                <div class="quiz-option" onclick="checkAnswer1(this, false)">❌ Якухай</div>
-                <div class="quiz-option" onclick="checkAnswer1(this, false)">❌ Чинитсу</div>
-                <div class="quiz-option" onclick="checkAnswer1(this, true)">✅ Танъяо</div>
-                <div class="quiz-option" onclick="checkAnswer1(this, false)">❌ Тойтой</div>
+                <div class="quiz-option" onclick="checkAnswer1(this, false)">Якухай</div>
+                <div class="quiz-option" onclick="checkAnswer1(this, false)">Чинитсу</div>
+                <div class="quiz-option" onclick="checkAnswer1(this, true)">Танъяо</div>
+                <div class="quiz-option" onclick="checkAnswer1(this, false)">Тойтой</div>
                 <div id="result1" class="quiz-result" style="display: none;"></div>
             </div>
 
@@ -466,10 +101,10 @@
                     <div class="tile man"><img src="tiles/regular/Man9.svg" alt="9m"></div>
                     <div class="tile man"><img src="tiles/regular/Man9.svg" alt="9m"></div>
                 </div>
-                <div class="quiz-option" onclick="checkAnswer2(this, false)">❌ 4 группы</div>
-                <div class="quiz-option" onclick="checkAnswer2(this, true)">✅ 2 группы</div>
-                <div class="quiz-option" onclick="checkAnswer2(this, false)">❌ 3 группы</div>
-                <div class="quiz-option" onclick="checkAnswer2(this, false)">❌ 1 группа</div>
+                <div class="quiz-option" onclick="checkAnswer2(this, false)">4 группы</div>
+                <div class="quiz-option" onclick="checkAnswer2(this, true)">2 группы</div>
+                <div class="quiz-option" onclick="checkAnswer2(this, false)">3 группы</div>
+                <div class="quiz-option" onclick="checkAnswer2(this, false)">1 группа</div>
                 <div id="result2" class="quiz-result" style="display: none;"></div>
             </div>
 
@@ -479,10 +114,10 @@
                     <div class="quiz-title">Сколько стоит рука с 6 ханами на Рон (для не-дилера)?</div>
                     <div class="quiz-score" id="score3">Не отвечено</div>
                 </div>
-                <div class="quiz-option" onclick="checkAnswer3(this, false)">❌ 8,000 очков</div>
-                <div class="quiz-option" onclick="checkAnswer3(this, true)">✅ 12,000 очков (Ханеман)</div>
-                <div class="quiz-option" onclick="checkAnswer3(this, false)">❌ 16,000 очков</div>
-                <div class="quiz-option" onclick="checkAnswer3(this, false)">❌ 24,000 очков</div>
+                <div class="quiz-option" onclick="checkAnswer3(this, false)">8,000 очков</div>
+                <div class="quiz-option" onclick="checkAnswer3(this, true)">12,000 очков (Ханеман)</div>
+                <div class="quiz-option" onclick="checkAnswer3(this, false)">16,000 очков</div>
+                <div class="quiz-option" onclick="checkAnswer3(this, false)">24,000 очков</div>
                 <div id="result3" class="quiz-result" style="display: none;"></div>
             </div>
 
@@ -492,10 +127,10 @@
                     <div class="quiz-title">Что такое "терминалы"?</div>
                     <div class="quiz-score" id="score4">Не отвечено</div>
                 </div>
-                <div class="quiz-option" onclick="checkAnswer4(this, false)">❌ Фишки 2-8</div>
-                <div class="quiz-option" onclick="checkAnswer4(this, true)">✅ Фишки 1 и 9</div>
-                <div class="quiz-option" onclick="checkAnswer4(this, false)">❌ Все почётные фишки</div>
-                <div class="quiz-option" onclick="checkAnswer4(this, false)">❌ Только драконы</div>
+                <div class="quiz-option" onclick="checkAnswer4(this, false)">Фишки 2-8</div>
+                <div class="quiz-option" onclick="checkAnswer4(this, true)">Фишки 1 и 9</div>
+                <div class="quiz-option" onclick="checkAnswer4(this, false)">Все почётные фишки</div>
+                <div class="quiz-option" onclick="checkAnswer4(this, false)">Только драконы</div>
                 <div id="result4" class="quiz-result" style="display: none;"></div>
             </div>
 
@@ -505,10 +140,10 @@
                     <div class="quiz-title">Можно ли выиграть без яку?</div>
                     <div class="quiz-score" id="score5">Не отвечено</div>
                 </div>
-                <div class="quiz-option" onclick="checkAnswer5(this, false)">❌ Да, если есть правильная структура</div>
-                <div class="quiz-option" onclick="checkAnswer5(this, true)">✅ Нет, нужно минимум 1 яку</div>
-                <div class="quiz-option" onclick="checkAnswer5(this, false)">❌ Да, если есть дора</div>
-                <div class="quiz-option" onclick="checkAnswer5(this, false)">❌ Зависит от правил</div>
+                <div class="quiz-option" onclick="checkAnswer5(this, false)">Да, если есть правильная структура</div>
+                <div class="quiz-option" onclick="checkAnswer5(this, true)">Нет, нужно минимум 1 яку</div>
+                <div class="quiz-option" onclick="checkAnswer5(this, false)">Да, если есть дора</div>
+                <div class="quiz-option" onclick="checkAnswer5(this, false)">Зависит от правил</div>
                 <div id="result5" class="quiz-result" style="display: none;"></div>
             </div>
 
@@ -633,6 +268,10 @@
                 </ol>
             </div>
 
+                        <div class="progress-section">
+                <button class="btn btn-success mark-complete" data-page="practice">✓ Отметить как изученное</button>
+            </div>
+
             <div class="nav-buttons">
                 <a href="scoring.html" class="btn">← Очки</a>
                 <a href="index.html" class="btn">На главную</a>
@@ -666,7 +305,21 @@
             const options = element.parentElement.querySelectorAll('.quiz-option');
             options.forEach(opt => opt.style.pointerEvents = 'none');
             
-            element.classList.add(isCorrect ? 'correct' : 'wrong');
+            // Добавляем иконку к выбранному ответу
+            if (isCorrect) {
+                element.classList.add('correct');
+                element.textContent = '✅ ' + element.textContent;
+            } else {
+                element.classList.add('wrong');
+                element.textContent = '❌ ' + element.textContent;
+                // Показываем правильный ответ
+                options.forEach(opt => {
+                    if (opt.onclick.toString().includes('true')) {
+                        opt.classList.add('correct');
+                        opt.textContent = '✅ ' + opt.textContent;
+                    }
+                });
+            }
             
             const result = document.getElementById('result1');
             result.style.display = 'block';
@@ -696,7 +349,21 @@
             const options = element.parentElement.querySelectorAll('.quiz-option');
             options.forEach(opt => opt.style.pointerEvents = 'none');
             
-            element.classList.add(isCorrect ? 'correct' : 'wrong');
+            // Добавляем иконку к выбранному ответу
+            if (isCorrect) {
+                element.classList.add('correct');
+                element.textContent = '✅ ' + element.textContent;
+            } else {
+                element.classList.add('wrong');
+                element.textContent = '❌ ' + element.textContent;
+                // Показываем правильный ответ
+                options.forEach(opt => {
+                    if (opt.onclick.toString().includes('true')) {
+                        opt.classList.add('correct');
+                        opt.textContent = '✅ ' + opt.textContent;
+                    }
+                });
+            }
             
             const result = document.getElementById('result2');
             result.style.display = 'block';
@@ -726,7 +393,21 @@
             const options = element.parentElement.querySelectorAll('.quiz-option');
             options.forEach(opt => opt.style.pointerEvents = 'none');
             
-            element.classList.add(isCorrect ? 'correct' : 'wrong');
+            // Добавляем иконку к выбранному ответу
+            if (isCorrect) {
+                element.classList.add('correct');
+                element.textContent = '✅ ' + element.textContent;
+            } else {
+                element.classList.add('wrong');
+                element.textContent = '❌ ' + element.textContent;
+                // Показываем правильный ответ
+                options.forEach(opt => {
+                    if (opt.onclick.toString().includes('true')) {
+                        opt.classList.add('correct');
+                        opt.textContent = '✅ ' + opt.textContent;
+                    }
+                });
+            }
             
             const result = document.getElementById('result3');
             result.style.display = 'block';
@@ -756,7 +437,21 @@
             const options = element.parentElement.querySelectorAll('.quiz-option');
             options.forEach(opt => opt.style.pointerEvents = 'none');
             
-            element.classList.add(isCorrect ? 'correct' : 'wrong');
+            // Добавляем иконку к выбранному ответу
+            if (isCorrect) {
+                element.classList.add('correct');
+                element.textContent = '✅ ' + element.textContent;
+            } else {
+                element.classList.add('wrong');
+                element.textContent = '❌ ' + element.textContent;
+                // Показываем правильный ответ
+                options.forEach(opt => {
+                    if (opt.onclick.toString().includes('true')) {
+                        opt.classList.add('correct');
+                        opt.textContent = '✅ ' + opt.textContent;
+                    }
+                });
+            }
             
             const result = document.getElementById('result4');
             result.style.display = 'block';
@@ -786,7 +481,21 @@
             const options = element.parentElement.querySelectorAll('.quiz-option');
             options.forEach(opt => opt.style.pointerEvents = 'none');
             
-            element.classList.add(isCorrect ? 'correct' : 'wrong');
+            // Добавляем иконку к выбранному ответу
+            if (isCorrect) {
+                element.classList.add('correct');
+                element.textContent = '✅ ' + element.textContent;
+            } else {
+                element.classList.add('wrong');
+                element.textContent = '❌ ' + element.textContent;
+                // Показываем правильный ответ
+                options.forEach(opt => {
+                    if (opt.onclick.toString().includes('true')) {
+                        opt.classList.add('correct');
+                        opt.textContent = '✅ ' + opt.textContent;
+                    }
+                });
+            }
             
             const result = document.getElementById('result5');
             result.style.display = 'block';
@@ -886,5 +595,9 @@
         // Initialize progress
         updateProgress();
     </script>
+    <!-- Progress Tracking -->
+    <script src="js/progress.js"></script>
 </body>
 </html>
+
+

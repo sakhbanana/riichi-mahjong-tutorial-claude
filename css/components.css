@@ -1,0 +1,413 @@
+/* =====================================================
+   Components - Переиспользуемые компоненты
+   ===================================================== */
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    background: var(--gradient-accent);
+    color: var(--color-white);
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    transition: all var(--transition-base);
+    margin: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm) 0;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    color: var(--color-white);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+}
+
+/* Info Boxes */
+.info-box {
+    background: var(--color-info-light);
+    border-left: 4px solid var(--color-info);
+    padding: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+    border-radius: var(--radius-sm);
+}
+
+.warning-box {
+    background: var(--color-warning-light);
+    border-left: 4px solid var(--color-warning);
+    padding: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+    border-radius: var(--radius-sm);
+}
+
+.success-box {
+    background: var(--color-success-light);
+    border-left: 4px solid var(--color-success);
+    padding: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+    border-radius: var(--radius-sm);
+}
+
+/* Cards */
+.card {
+    background: var(--color-white);
+    border: 2px solid var(--color-gray);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    transition: all var(--transition-base);
+}
+
+.card:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+/* Feature Cards */
+.feature-card {
+    background: var(--color-white);
+    border-radius: 12px;
+    padding: var(--spacing-lg);
+    border: 2px solid var(--color-gray);
+    transition: all var(--transition-base);
+    text-align: center;
+}
+
+.feature-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+}
+
+/* Tiles */
+.tile {
+    width: var(--tile-width);
+    height: var(--tile-height);
+    background: var(--color-white);
+    border: 2px solid var(--color-black);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-tile);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.tile:hover {
+    transform: translateY(-8px) scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.tile.man {
+    color: var(--tile-man);
+    border-color: var(--tile-man);
+}
+
+.tile.pin {
+    color: var(--tile-pin);
+    border-color: var(--tile-pin);
+}
+
+.tile.sou {
+    color: var(--tile-sou);
+    border-color: var(--tile-sou);
+}
+
+.tile.honor {
+    color: var(--tile-honor);
+    border-color: var(--tile-honor);
+    background: linear-gradient(135deg, #fafafa 0%, #eeeeee 100%);
+}
+
+.tile.red {
+    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+    border-color: #d32f2f;
+    color: #d32f2f;
+}
+
+/* Mini Tiles */
+.tile-mini {
+    width: var(--tile-mini-width);
+    height: var(--tile-mini-height);
+    background: var(--color-white);
+    border: 2px solid var(--color-black);
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.tile-mini img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.tile-mini.man { border-color: var(--tile-man); }
+.tile-mini.pin { border-color: var(--tile-pin); }
+.tile-mini.sou { border-color: var(--tile-sou); }
+.tile-mini.honor { border-color: var(--tile-honor); }
+
+.tile-mini.highlight {
+    background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+    border: 3px solid #f57f17;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-round);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.badge-closed {
+    background: var(--color-success-light);
+    color: #155724;
+}
+
+.badge-any {
+    background: var(--color-info-light);
+    color: #004085;
+}
+
+/* Score Badges */
+.score-badge {
+    display: inline-block;
+    background: var(--gradient-accent);
+    color: var(--color-white);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-round);
+    font-weight: 600;
+    font-size: var(--font-size-large);
+}
+
+/* Filter Buttons */
+.filter-btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--color-accent);
+    background: var(--color-white);
+    color: var(--color-accent);
+    border-radius: var(--radius-round);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.filter-btn:hover {
+    background: #f0f4ff;
+}
+
+.filter-btn.active {
+    background: var(--color-accent);
+    color: var(--color-white);
+}
+
+/* Tooltips */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 2px dotted var(--color-accent);
+    cursor: help;
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 300px;
+    background-color: var(--color-primary-light);
+    color: var(--color-white);
+    text-align: left;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    position: absolute;
+    z-index: var(--z-tooltip);
+    bottom: 125%;
+    left: 50%;
+    margin-left: -150px;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    box-shadow: var(--shadow-md);
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--color-primary-light) transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    height: 30px;
+    background: var(--color-gray);
+    border-radius: var(--radius-round);
+    overflow: hidden;
+    margin: var(--spacing-md) 0;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--gradient-accent);
+    transition: width var(--transition-slow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    font-weight: 600;
+}
+
+/* Resource Tags */
+.resource-tag {
+    display: inline-block;
+    background: var(--color-info-light);
+    color: var(--color-info);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-round);
+    font-size: 0.85rem;
+    margin: var(--spacing-xs);
+}
+
+/* Game Animation Styles */
+.player-hand {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.player-calls {
+    margin-top: 8px;
+    min-height: 30px;
+}
+
+.discards {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+.tile-mini.open {
+    opacity: 0.9;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+.tile-mini.riichi-discard {
+    transform: rotate(90deg);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+/* Animation Controls */
+.animation-controls {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.step-indicator {
+    background: var(--color-info-light);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin: var(--spacing-md) 0;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-align: center;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .tile-mini {
+        width: 38px;
+        height: 55px;
+    }
+    
+    .player-hand {
+        gap: 3px;
+    }
+
+    .discards {
+        gap: 4px;
+        max-width: 240px;
+    }
+}
+
+@media (max-width: 768px) {
+    .tile {
+        width: 45px;
+        height: 65px;
+    }
+    
+    .tile-mini {
+        width: 30px;
+        height: 45px;
+        font-size: 0.85rem;
+    }
+    
+    .tooltip .tooltiptext {
+        width: 250px;
+        margin-left: -125px;
+    }
+
+    .player-hand {
+        gap: 2px;
+    }
+
+    .discards {
+        gap: 3px;
+        max-width: 180px;
+    }
+}

@@ -1,0 +1,195 @@
+/* =====================================================
+   Layout - Структура страниц
+   ===================================================== */
+
+/* Header */
+.header {
+    background: rgba(255, 255, 255, 0.95);
+    padding: var(--spacing-xl);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+}
+
+.header h1 {
+    color: var(--color-primary);
+    font-size: var(--font-size-h1);
+    margin-bottom: var(--spacing-sm);
+}
+
+.header p {
+    color: var(--color-gray-dark);
+    font-size: var(--font-size-large);
+}
+
+/* Navigation */
+nav {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+}
+
+.nav-container {
+    max-width: var(--max-width-content);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: var(--spacing-sm);
+}
+
+.nav-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-weight: 600;
+    transition: all var(--transition-base);
+    border-radius: var(--radius-md);
+    margin: var(--spacing-xs);
+}
+
+.nav-link:hover {
+    background: #f0f4ff;
+    transform: translateY(-2px);
+}
+
+.nav-link.active {
+    background: var(--gradient-accent);
+    color: var(--color-white);
+}
+
+/* Navigation Buttons */
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-xl);
+    border-top: 2px solid var(--color-gray);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: var(--spacing-xxl);
+}
+
+footer p {
+    margin: var(--spacing-sm) 0;
+}
+
+/* Grid Layouts */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin: var(--spacing-xl) 0;
+}
+
+.comparison-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+}
+
+.comparison-card {
+    background: var(--color-white);
+    border: 2px solid var(--color-gray);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+}
+
+.comparison-card h4 {
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Tile Display */
+.tile-display {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-md);
+    background: var(--color-white);
+    border-radius: var(--radius-md);
+    justify-content: center;
+}
+
+/* Hand Display */
+.hand-display {
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    margin: var(--spacing-sm) 0;
+    align-items: center;
+}
+
+.separator {
+    width: 3px;
+    height: 50px;
+    background: var(--color-accent);
+    margin: 0 0.3rem;
+}
+
+/* Filter Container */
+.filter-container {
+    background: var(--color-gray-light);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    margin: var(--spacing-lg) 0;
+}
+
+.filter-section {
+    margin: var(--spacing-md) 0;
+}
+
+.filter-section h4 {
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-sm);
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+}
+
+/* Search Box */
+.search-box {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--color-accent);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    margin-top: var(--spacing-md);
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .nav-container {
+        flex-direction: column;
+    }
+    
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .comparison-table {
+        grid-template-columns: 1fr;
+    }
+    
+    .nav-buttons {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+}
+

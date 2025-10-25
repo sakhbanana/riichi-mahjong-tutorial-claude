@@ -1,0 +1,393 @@
+/* =====================================================
+   Page-Specific Styles - Специфичные стили страниц
+   ===================================================== */
+
+/* ========== Basics Page ========== */
+
+/* Animation container */
+.animation-container {
+    background: var(--color-white);
+    border: 3px solid var(--color-accent);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    margin: var(--spacing-xl) 0;
+    text-align: center;
+}
+
+.game-table {
+    width: 100%;
+    max-width: 900px;
+    height: 600px;
+    margin: var(--spacing-md) auto;
+    background: #2a5;
+    border-radius: var(--radius-lg);
+    position: relative;
+    box-shadow: var(--shadow-md);
+}
+
+.player-area {
+    position: absolute;
+    background: rgba(255,255,255,0.15);
+    border: 3px solid rgba(255,255,255,0.4);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    min-width: 180px;
+    text-align: center;
+    color: white;
+    font-size: 0.95rem;
+}
+
+.player-area.active {
+    background: rgba(255,215,0,0.3);
+    border-color: gold;
+    animation: pulse 1s infinite;
+}
+
+.player-east { top: 15px; left: 50%; transform: translateX(-50%); }
+.player-south { right: 15px; top: 50%; transform: translateY(-50%); }
+.player-west { bottom: 15px; left: 50%; transform: translateX(-50%); }
+.player-north { left: 15px; top: 50%; transform: translateY(-50%); }
+
+.center-area {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    min-width: 220px;
+    min-height: 120px;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.animation-controls {
+    margin: var(--spacing-md) 0;
+}
+
+.step-indicator {
+    background: var(--color-gray-light);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin: var(--spacing-md) 0;
+    font-weight: 600;
+    color: var(--color-accent);
+}
+
+@media (max-width: 1024px) {
+    .game-table {
+        max-width: 700px;
+        height: 500px;
+    }
+    
+    .player-area {
+        min-width: 150px;
+        padding: var(--spacing-sm);
+        font-size: 0.85rem;
+    }
+    
+    .center-area {
+        min-width: 180px;
+        min-height: 100px;
+        padding: var(--spacing-md);
+    }
+}
+
+@media (max-width: 768px) {
+    .game-table {
+        max-width: 100%;
+        height: 400px;
+    }
+    
+    .player-area {
+        min-width: 120px;
+        padding: var(--spacing-xs);
+        font-size: 0.75rem;
+    }
+    
+    .center-area {
+        min-width: 140px;
+        min-height: 80px;
+        padding: var(--spacing-sm);
+        font-size: 0.85rem;
+    }
+}
+
+/* ========== Tiles Page ========== */
+
+.tile-section {
+    background: var(--color-gray-light);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    transition: all var(--transition-base);
+}
+
+.tile-section.hidden {
+    display: none;
+}
+
+/* ========== Yaku Page ========== */
+
+.yaku-card {
+    background: var(--color-white);
+    border: 2px solid var(--color-gray);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    transition: all var(--transition-base);
+}
+
+.yaku-card.hidden {
+    display: none;
+}
+
+.yaku-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.yaku-card h4 {
+    color: var(--color-primary);
+    font-size: var(--font-size-h4);
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.yaku-han {
+    display: inline-block;
+    background: var(--gradient-accent);
+    color: var(--color-white);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-round);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.yaku-han.yakuman {
+    background: var(--gradient-yakuman);
+}
+
+.yaku-condition {
+    background: var(--color-gray-light);
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    margin: var(--spacing-sm) 0;
+}
+
+.yaku-example {
+    background: var(--color-white);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin: var(--spacing-md) 0;
+    border: 2px solid var(--color-gray);
+}
+
+@media (max-width: 768px) {
+    .yaku-card h4 {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ========== Scoring Page ========== */
+
+.term-card {
+    background: var(--color-white);
+    border: 2px solid var(--color-gray);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-md) 0;
+}
+
+.term-card h4 {
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-sm);
+}
+
+.example-box {
+    background: var(--color-gray-light);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+}
+
+.example-title {
+    color: var(--color-accent);
+    font-weight: 600;
+    font-size: var(--font-size-large);
+    margin-bottom: var(--spacing-md);
+}
+
+.calculation {
+    background: var(--color-white);
+    border: 2px solid var(--color-accent);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+    font-family: var(--font-monospace);
+}
+
+.calculation-step {
+    margin: var(--spacing-sm) 0;
+    padding: var(--spacing-sm);
+    background: var(--color-gray-light);
+    border-radius: var(--radius-sm);
+}
+
+/* ========== Practice Page ========== */
+
+.quiz-container {
+    background: var(--color-gray-light);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    margin: var(--spacing-lg) 0;
+}
+
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.quiz-title {
+    color: var(--color-accent);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.quiz-score {
+    background: var(--color-accent);
+    color: var(--color-white);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-round);
+    font-weight: 600;
+}
+
+.quiz-option {
+    background: var(--color-white);
+    padding: var(--spacing-md);
+    margin: var(--spacing-sm) 0;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    border: 2px solid var(--color-gray);
+    font-weight: 500;
+}
+
+.quiz-option:hover:not(.correct):not(.wrong) {
+    border-color: var(--color-accent);
+    transform: translateX(5px);
+    background: #f0f4ff;
+}
+
+.quiz-option.correct {
+    background: var(--color-success-light);
+    border-color: var(--color-success);
+    animation: correctPulse 0.5s;
+}
+
+.quiz-option.wrong {
+    background: var(--color-danger-light);
+    border-color: var(--color-danger);
+    animation: shake 0.5s;
+}
+
+@keyframes correctPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.quiz-result {
+    margin-top: var(--spacing-md);
+    font-weight: 600;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+}
+
+.hand-builder {
+    background: var(--color-gray-light);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    margin: var(--spacing-lg) 0;
+}
+
+.hand-area {
+    min-height: 100px;
+    background: var(--color-white);
+    border: 3px dashed var(--color-accent);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.empty-message {
+    color: #999;
+    width: 100%;
+    text-align: center;
+    font-style: italic;
+}
+
+.resource-card {
+    background: var(--color-white);
+    border: 2px solid var(--color-gray);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-md) 0;
+    transition: all var(--transition-base);
+}
+
+.resource-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.resource-card h4 {
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-sm);
+}
+
+@media (max-width: 768px) {
+    .quiz-header {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+}
+
+/* ========== Example & Demo Sections ========== */
+
+.example {
+    background: var(--color-white);
+    border: 2px solid var(--color-accent);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+}
+
+.example-title {
+    color: var(--color-accent);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+

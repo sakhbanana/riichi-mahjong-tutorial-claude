@@ -3,343 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Основы - Риичи Маджонг</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: #333;
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
-        .header h1 {
-            color: #1e3c72;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .header p {
-            color: #666;
-            font-size: 1.1rem;
-        }
-
-        nav {
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            padding: 0.5rem;
-        }
-
-        .nav-link {
-            color: #1e3c72;
-            text-decoration: none;
-            padding: 1rem 1.5rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            border-radius: 8px;
-            margin: 0.25rem;
-        }
-
-        .nav-link:hover {
-            background: #f0f4ff;
-            transform: translateY(-2px);
-        }
-
-        .nav-link.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .content {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            animation: fadeIn 0.5s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 {
-            color: #1e3c72;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 0.5rem;
-        }
-
-        h3 {
-            color: #2a5298;
-            margin: 1.5rem 0 1rem;
-            font-size: 1.5rem;
-        }
-
-        p {
-            margin: 1rem 0;
-        }
-
-        .info-box {
-            background: #e7f3ff;
-            border-left: 4px solid #2196F3;
-            padding: 1rem;
-            margin: 1.5rem 0;
-            border-radius: 5px;
-        }
-
-        .warning-box {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 1rem;
-            margin: 1.5rem 0;
-            border-radius: 5px;
-        }
-
-        .success-box {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            padding: 1rem;
-            margin: 1.5rem 0;
-            border-radius: 5px;
-        }
-
-        .card {
-            background: #f8f9fa;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        /* Animation container */
-        .animation-container {
-            background: white;
-            border: 3px solid #667eea;
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .game-table {
-            width: 100%;
-            max-width: 600px;
-            height: 400px;
-            margin: 1rem auto;
-            background: #2a5;
-            border-radius: 10px;
-            position: relative;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
-        .player-area {
-            position: absolute;
-            background: rgba(255,255,255,0.1);
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 8px;
-            padding: 0.5rem;
-            min-width: 100px;
-            text-align: center;
-        }
-
-        .player-area.active {
-            background: rgba(255,215,0,0.3);
-            border-color: gold;
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .player-east { top: 10px; left: 50%; transform: translateX(-50%); }
-        .player-south { right: 10px; top: 50%; transform: translateY(-50%); }
-        .player-west { bottom: 10px; left: 50%; transform: translateX(-50%); }
-        .player-north { left: 10px; top: 50%; transform: translateY(-50%); }
-
-        .center-area {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.2);
-            border-radius: 10px;
-            padding: 1rem;
-            min-width: 150px;
-            color: white;
-            font-weight: 600;
-        }
-
-        .tile-mini {
-            display: inline-block;
-            width: 25px;
-            height: 35px;
-            background: white;
-            border: 1px solid #333;
-            border-radius: 3px;
-            margin: 2px;
-            font-size: 0.8rem;
-            line-height: 35px;
-            color: #e74c3c;
-        }
-
-        .animation-controls {
-            margin: 1rem 0;
-        }
-
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            margin: 0.5rem;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .step-indicator {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-            font-weight: 600;
-            color: #667eea;
-        }
-
-        .example {
-            background: white;
-            border: 2px solid #667eea;
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 1rem 0;
-        }
-
-        .example-title {
-            color: #667eea;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            border-bottom: 2px dotted #667eea;
-            cursor: help;
-            color: #667eea;
-            font-weight: 600;
-        }
-
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 300px;
-            background-color: #2a5298;
-            color: #fff;
-            text-align: left;
-            border-radius: 8px;
-            padding: 1rem;
-            position: absolute;
-            z-index: 1000;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -150px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
-        .tooltip .tooltiptext::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #2a5298 transparent transparent transparent;
-        }
-
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .nav-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 2px solid #e0e0e0;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-top: 3rem;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-
-            .nav-container {
-                flex-direction: column;
-            }
-
-            .game-table {
-                height: 300px;
-            }
-
-            .tooltip .tooltiptext {
-                width: 250px;
-                margin-left: -125px;
-            }
-        }
-    </style>
+    <meta name="description" content="Основы японского риичи-маджонга: структура руки, типы групп, основные термины и правила игры с интерактивной анимацией.">
+    <meta name="keywords" content="маджонг основы, правила маджонга, риичи, тенпай, рон, цумо, чи, пон, кан">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🀄</text></svg>">
+    
+    <title>Основы игры - Риичи Маджонг</title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/pages.css">
 </head>
 <body>
     <div class="header">
@@ -355,8 +32,10 @@
             <a href="yaku.html" class="nav-link">Яку</a>
             <a href="scoring.html" class="nav-link">Очки</a>
             <a href="practice.html" class="nav-link">Практика</a>
+            <a href="glossary.html" class="nav-link">Глоссарий</a>
         </div>
     </nav>
+
 
     <div class="container">
         <div class="content">
@@ -373,34 +52,45 @@
                 состоящую из 4 групп и 1 пары.
             </div>
 
-            <h3>🎬 Анимация: Ход игры</h3>
+            <h3>🎬 Интерактивная демонстрация: Ход игры</h3>
             <div class="animation-container">
-                <h4 style="color: #667eea; margin-bottom: 1rem;">Интерактивная демонстрация игрового процесса</h4>
+                <h4 style="color: #667eea; margin-bottom: 1rem;">Смотрите, как идёт реальная игра</h4>
                 
                 <div class="game-table">
+                    <!-- Восток (сверху) -->
                     <div class="player-area player-east" id="playerEast">
-                        <div>東 (Восток - Дилер)</div>
-                        <div class="tile-mini">5萬</div>
-                        <div class="tile-mini">6萬</div>
-                        <div class="tile-mini">7萬</div>
+                        <div style="font-weight: 600; margin-bottom: 0.3rem;">東 Восток (Дилер)</div>
+                        <div class="player-hand" id="handEast">
+                            <!-- Руки будут заполняться JavaScript -->
+                        </div>
+                        <div class="player-calls" id="callsEast"></div>
                     </div>
+
+                    <!-- Юг (справа) -->
                     <div class="player-area player-south" id="playerSouth">
-                        <div>南 (Юг)</div>
-                        <div class="tile-mini">2p</div>
-                        <div class="tile-mini">3p</div>
+                        <div style="font-weight: 600; margin-bottom: 0.3rem;">南 Юг</div>
+                        <div class="player-hand" id="handSouth"></div>
+                        <div class="player-calls" id="callsSouth"></div>
                     </div>
+
+                    <!-- Запад (снизу) -->
                     <div class="player-area player-west" id="playerWest">
-                        <div>西 (Запад)</div>
-                        <div class="tile-mini">8s</div>
-                        <div class="tile-mini">9s</div>
+                        <div style="font-weight: 600; margin-bottom: 0.3rem;">西 Запад</div>
+                        <div class="player-hand" id="handWest"></div>
+                        <div class="player-calls" id="callsWest"></div>
                     </div>
+
+                    <!-- Север (слева) -->
                     <div class="player-area player-north" id="playerNorth">
-                        <div>北 (Север)</div>
-                        <div class="tile-mini">白</div>
-                        <div class="tile-mini">白</div>
+                        <div style="font-weight: 600; margin-bottom: 0.3rem;">北 Север</div>
+                        <div class="player-hand" id="handNorth"></div>
+                        <div class="player-calls" id="callsNorth"></div>
                     </div>
+
+                    <!-- Центр - сбросы -->
                     <div class="center-area" id="centerArea">
-                        Сбросы
+                        <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.3rem;">Сбросы</div>
+                        <div class="discards" id="discards"></div>
                     </div>
                 </div>
 
@@ -410,18 +100,19 @@
 
                 <div class="animation-controls">
                     <button class="btn" onclick="startAnimation()">▶ Начать</button>
+                    <button class="btn" onclick="pauseAnimation()" id="pauseBtn" style="display:none;">⏸ Пауза</button>
                     <button class="btn" onclick="resetAnimation()">↻ Сброс</button>
                 </div>
 
-                <div style="text-align: left; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-                    <strong>Что показывает анимация:</strong>
-                    <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>Раздача фишек игрокам</li>
-                        <li>Ход игрока: взять фишку → сбросить фишку</li>
-                        <li>Вызовы: Чи, Пон, Кан</li>
-                        <li>Объявление Риичи</li>
-                        <li>Победа (Рон или Цумо)</li>
-                    </ol>
+                <div class="info-box" style="margin-top: 1rem; text-align: left;">
+                    <strong>📝 Что показывает демонстрация:</strong>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li><strong>Раздача:</strong> Каждый получает 13 фишек (дилер берёт 14-ю)</li>
+                        <li><strong>Ходы:</strong> Взять фишку из стены → сбросить в центр</li>
+                        <li><strong>Пон:</strong> Забрать чужой сброс для сета (3 одинаковых)</li>
+                        <li><strong>Риичи:</strong> Объявление готовности (ставка 1000 очков)</li>
+                        <li><strong>Цумо/Рон:</strong> Выигрыш самовытягиванием или на чужой сброс</li>
+                    </ul>
                 </div>
             </div>
 
@@ -538,6 +229,10 @@
                 </ol>
             </div>
 
+            <div class="progress-section">
+                <button class="btn btn-success mark-complete" data-page="basics">✓ Отметить как изученное</button>
+            </div>
+
             <div class="nav-buttons">
                 <a href="index.html" class="btn">← Главная</a>
                 <a href="tiles.html" class="btn">Фишки →</a>
@@ -551,59 +246,276 @@
     </footer>
 
     <script>
+        // Улучшенная анимация игрового процесса
         let animationStep = 0;
         let animationInterval;
+        let isPaused = false;
 
+        // Начальные руки игроков (реалистичные)
+        const initialHands = {
+            east: ['Man2', 'Man3', 'Man4', 'Pin5', 'Pin6', 'Pin7', 'Sou2', 'Sou3', 'Sou4', 'Ton', 'Ton', 'Nan', 'Nan'],
+            south: ['Man1', 'Man2', 'Man3', 'Pin2', 'Pin3', 'Pin4', 'Sou6', 'Sou7', 'Sou8', 'Pei', 'Pei', 'Haku', 'Haku'],
+            west: ['Man7', 'Man8', 'Man9', 'Pin1', 'Pin1', 'Pin1', 'Sou5', 'Sou6', 'Sou7', 'Hatsu', 'Hatsu', 'Chun', 'Chun'],
+            north: ['Man4', 'Man5', 'Man6', 'Pin8', 'Pin9', 'Sou1', 'Sou2', 'Sou3', 'Ton', 'Nan', 'Shaa', 'Pei', 'Haku']
+        };
+
+        const gameState = {
+            hands: JSON.parse(JSON.stringify(initialHands)),
+            calls: { east: [], south: [], west: [], north: [] },
+            discards: []
+        };
+
+        // Сценарий игры
         const steps = [
-            { text: "Шаг 1: Раздача фишек. Каждый игрок получает 13 фишек.", player: null },
-            { text: "Шаг 2: Ход Востока (дилера). Берёт 14-ю фишку из стены.", player: "playerEast" },
-            { text: "Шаг 3: Восток сбрасывает одну фишку в центр.", player: "playerEast" },
-            { text: "Шаг 4: Ход переходит к Югу. Юг берёт фишку.", player: "playerSouth" },
-            { text: "Шаг 5: Юг сбрасывает фишку.", player: "playerSouth" },
-            { text: "Шаг 6: Запад объявляет 'Пон!' — забирает сброс для сета.", player: "playerWest" },
-            { text: "Шаг 7: Запад показывает открытый сет и сбрасывает фишку.", player: "playerWest" },
-            { text: "Шаг 8: Север объявляет 'Риичи!' — ставит 1000 очков на стол.", player: "playerNorth" },
-            { text: "Шаг 9: Игра продолжается. Ходы идут по кругу.", player: null },
-            { text: "Шаг 10: Север выигрывает на 'Цумо!' — сам вытянул нужную фишку!", player: "playerNorth" }
+            { 
+                text: "Шаг 1: Раздача завершена. Каждый игрок получил 13 фишек. Дилер (Восток) начинает.", 
+                player: null,
+                action: 'deal'
+            },
+            { 
+                text: "Шаг 2: Восток (дилер) берёт 14-ю фишку из стены (Нан 南).", 
+                player: "playerEast",
+                action: 'draw',
+                tile: 'Nan'
+            },
+            { 
+                text: "Шаг 3: Восток сбрасывает лишнюю фишку (Нан 南) в центр.", 
+                player: "playerEast",
+                action: 'discard',
+                tile: 'Nan'
+            },
+            { 
+                text: "Шаг 4: Юг берёт фишку из стены (Хаку 白).", 
+                player: "playerSouth",
+                action: 'draw',
+                tile: 'Haku'
+            },
+            { 
+                text: "Шаг 5: Юг сбрасывает Хаку (白) в центр.", 
+                player: "playerSouth",
+                action: 'discard',
+                tile: 'Haku'
+            },
+            { 
+                text: "Шаг 6: Запад объявляет 'Пон!' (ポン) — забирает сброшенную Хаку для сета 白-白-白!", 
+                player: "playerWest",
+                action: 'pon',
+                tile: 'Haku',
+                ponTiles: ['Haku', 'Haku', 'Haku']
+            },
+            { 
+                text: "Шаг 7: Запад открывает сет и сбрасывает Чун (中).", 
+                player: "playerWest",
+                action: 'discard',
+                tile: 'Chun'
+            },
+            { 
+                text: "Шаг 8: Север берёт фишку (Pin7 ⑦) и объявляет 'Риичи!' (リーチ) — рука готова!", 
+                player: "playerNorth",
+                action: 'riichi',
+                tile: 'Pin7'
+            },
+            { 
+                text: "Шаг 9: Север ставит 1000 очков на стол и сбрасывает Пей (北) боком.", 
+                player: "playerNorth",
+                action: 'discard',
+                tile: 'Pei',
+                riichi: true
+            },
+            { 
+                text: "Шаг 10: Восток берёт фишку (Man6 6萬) и сбрасывает её.", 
+                player: "playerEast",
+                action: 'discard',
+                tile: 'Man6'
+            },
+            { 
+                text: "Шаг 11: Север берёт нужную фишку (Pin7 ⑦) и объявляет 'Цумо!' (ツモ) — ПОБЕДА!", 
+                player: "playerNorth",
+                action: 'tsumo',
+                tile: 'Pin7'
+            }
         ];
+
+        function createTile(tileName, cssClass = '') {
+            const tile = document.createElement('div');
+            tile.className = `tile-mini ${cssClass}`;
+            const img = document.createElement('img');
+            img.src = `tiles/regular/${tileName}.svg`;
+            img.alt = tileName;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            tile.appendChild(img);
+            return tile;
+        }
+
+        function renderHand(player, handId) {
+            const handElement = document.getElementById(handId);
+            handElement.innerHTML = '';
+            gameState.hands[player].forEach(tileName => {
+                handElement.appendChild(createTile(tileName));
+            });
+        }
+
+        function renderCalls(player, callsId) {
+            const callsElement = document.getElementById(callsId);
+            callsElement.innerHTML = '';
+            if (gameState.calls[player].length > 0) {
+                const callDiv = document.createElement('div');
+                callDiv.style.cssText = 'display: flex; gap: 2px; margin-top: 5px; flex-wrap: wrap;';
+                gameState.calls[player].forEach(call => {
+                    const groupDiv = document.createElement('div');
+                    groupDiv.style.cssText = 'display: flex; gap: 1px; padding: 3px; background: rgba(255,215,0,0.2); border-radius: 3px; border: 1px solid #ffd700;';
+                    call.tiles.forEach(tileName => {
+                        groupDiv.appendChild(createTile(tileName, 'open'));
+                    });
+                    callDiv.appendChild(groupDiv);
+                });
+                callsElement.appendChild(callDiv);
+            }
+        }
+
+        function renderDiscards() {
+            const discardsElement = document.getElementById('discards');
+            discardsElement.innerHTML = '';
+            gameState.discards.forEach(discard => {
+                discardsElement.appendChild(createTile(discard.tile, discard.riichi ? 'riichi-discard' : ''));
+            });
+        }
+
+        function initializeGame() {
+            renderHand('east', 'handEast');
+            renderHand('south', 'handSouth');
+            renderHand('west', 'handWest');
+            renderHand('north', 'handNorth');
+        }
 
         function startAnimation() {
             resetAnimation();
+            initializeGame();
+            document.getElementById('pauseBtn').style.display = 'inline-block';
+            isPaused = false;
             animationInterval = setInterval(() => {
-                if (animationStep < steps.length) {
-                    showStep(animationStep);
+                if (!isPaused && animationStep < steps.length) {
+                    executeStep(animationStep);
                     animationStep++;
-                } else {
+                } else if (animationStep >= steps.length) {
                     clearInterval(animationInterval);
+                    document.getElementById('pauseBtn').style.display = 'none';
                 }
-            }, 3000);
+            }, 2500);
+                }
+
+        function pauseAnimation() {
+            isPaused = !isPaused;
+            document.getElementById('pauseBtn').textContent = isPaused ? '▶ Продолжить' : '⏸ Пауза';
         }
 
-        function showStep(step) {
+        function executeStep(step) {
             const currentStep = steps[step];
             document.getElementById('stepIndicator').textContent = currentStep.text;
             
-            // Remove all active classes
+            // Убрать active со всех игроков
             document.querySelectorAll('.player-area').forEach(p => p.classList.remove('active'));
             
-            // Add active class to current player
+            // Добавить active к текущему игроку
             if (currentStep.player) {
                 document.getElementById(currentStep.player).classList.add('active');
             }
 
-            // Update center area
-            if (step >= 2) {
-                const centerArea = document.getElementById('centerArea');
-                const discardCount = Math.floor(step / 2);
-                centerArea.innerHTML = `Сбросы (${discardCount})`;
+            const playerKey = currentStep.player ? currentStep.player.replace('player', '').toLowerCase() : null;
+
+            // Выполнить действие
+            switch (currentStep.action) {
+                case 'deal':
+                    // Уже отрисовано в initializeGame
+                    break;
+                case 'draw':
+                    if (playerKey && currentStep.tile) {
+                        gameState.hands[playerKey].push(currentStep.tile);
+                        renderHand(playerKey, 'hand' + currentStep.player.replace('player', ''));
+                    }
+                    break;
+                case 'discard':
+                    if (playerKey && currentStep.tile) {
+                        const index = gameState.hands[playerKey].indexOf(currentStep.tile);
+                        if (index > -1) {
+                            gameState.hands[playerKey].splice(index, 1);
+                        }
+                        gameState.discards.push({ tile: currentStep.tile, riichi: currentStep.riichi || false });
+                        renderHand(playerKey, 'hand' + currentStep.player.replace('player', ''));
+                        renderDiscards();
+                    }
+                    break;
+                case 'pon':
+                    if (playerKey && currentStep.ponTiles) {
+                        // Удалить 2 фишки из руки (3-я взята из сброса)
+                        for (let i = 0; i < 2; i++) {
+                            const index = gameState.hands[playerKey].indexOf(currentStep.tile);
+                            if (index > -1) {
+                                gameState.hands[playerKey].splice(index, 1);
+                            }
+                        }
+                        // Удалить последний сброс
+                        gameState.discards.pop();
+                        // Добавить открытую группу
+                        gameState.calls[playerKey].push({ type: 'pon', tiles: currentStep.ponTiles });
+                        renderHand(playerKey, 'hand' + currentStep.player.replace('player', ''));
+                        renderCalls(playerKey, 'calls' + currentStep.player.replace('player', ''));
+                        renderDiscards();
+                    }
+                    break;
+                case 'riichi':
+                    if (playerKey && currentStep.tile) {
+                        gameState.hands[playerKey].push(currentStep.tile);
+                        renderHand(playerKey, 'hand' + currentStep.player.replace('player', ''));
+                    }
+                    break;
+                case 'tsumo':
+                    if (playerKey && currentStep.tile) {
+                        gameState.hands[playerKey].push(currentStep.tile);
+                        renderHand(playerKey, 'hand' + currentStep.player.replace('player', ''));
+                        // Подсветить победную фишку
+                        setTimeout(() => {
+                            const handElement = document.getElementById('hand' + currentStep.player.replace('player', ''));
+                            if (handElement.lastChild) {
+                                handElement.lastChild.style.animation = 'pulse 0.5s infinite';
+                            }
+                        }, 100);
+                    }
+                    break;
             }
         }
 
         function resetAnimation() {
             clearInterval(animationInterval);
             animationStep = 0;
+            isPaused = false;
+            gameState.hands = JSON.parse(JSON.stringify(initialHands));
+            gameState.calls = { east: [], south: [], west: [], north: [] };
+            gameState.discards = [];
+            
             document.getElementById('stepIndicator').textContent = 'Нажмите "Начать", чтобы увидеть демонстрацию';
             document.querySelectorAll('.player-area').forEach(p => p.classList.remove('active'));
-            document.getElementById('centerArea').innerHTML = 'Сбросы';
+            document.getElementById('pauseBtn').style.display = 'none';
+            document.getElementById('pauseBtn').textContent = '⏸ Пауза';
+            
+            // Очистить все руки
+            ['handEast', 'handSouth', 'handWest', 'handNorth'].forEach(id => {
+                document.getElementById(id).innerHTML = '';
+            });
+            ['callsEast', 'callsSouth', 'callsWest', 'callsNorth'].forEach(id => {
+                document.getElementById(id).innerHTML = '';
+            });
+            document.getElementById('discards').innerHTML = '';
         }
+
+        // Инициализация при загрузке
+        window.addEventListener('load', () => {
+            resetAnimation();
+        });
     </script>
+
+    <!-- Progress Tracking -->
+    <script src="js/progress.js"></script>
+</body>
+</html>
